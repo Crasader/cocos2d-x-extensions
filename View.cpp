@@ -2,7 +2,10 @@
 #include "cocostudio/CocoStudio.h"
 #include "Factory.h"
 #include "ViewModel.h"
+#include "PluginManager.h"
+#include "Env.h"
 
+using namespace cocos2d::plugin;
 using namespace cocostudio;
 
 View::View() : _pRootViewModel(nullptr)
@@ -31,6 +34,7 @@ bool View::initWithFactory(const std::string jsonFname, Factory<ViewModel>& fact
     _pRootViewModel->init();
     addChild(_pRootNode);
     setTouchParticle();
+    showAds();
 //    this->schedule(schedule_selector(View::update));
     return true;
 }
@@ -57,6 +61,24 @@ void View::setTouchParticle()
     getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, pBackground);
 }
 
+void View::runNextAction()
+{
+    if(_actionQueue.size() > 0){
+        auto t = _actionQueue.front();
+        Node* pNode = std::get<0>(t);
+        auto pAction = std::get<1>(t);
+        pNode->runAction(pAction);
+        pAction->release();
+        _actionQueue.pop();
+    }
+}
+
+void View::addActionQueue(Node* pNode, FiniteTimeAction* pAction)
+{
+    pAction->retain();
+    _actionQueue.push(std::make_tuple(pNode, pAction));
+}
+
 void View::onExit()
 {
     Layer::onExit();
@@ -80,3 +102,40 @@ void View::onEnterTransitionDidFinish()
         _pRootViewModel->onEnterTransitionDidFinish();
     }
 }
+
+void View::showAds()
+{
+    auto pluginManager = PluginManager::getInstance();
+    
+    auto plugin = pluginManager->loadPlugin("AdsAdmob");
+    _admob = dynamic_cast<ProtocolAds*>(plugin);
+    TAdsDeveloperInfo devInfo;
+
+    devInfo["AdmobID"] = ADMOB_ID;
+    _admob->configDeveloperInfo(devInfo);
+#ifdef DEBUG
+    _admob->setDebugMode(true);
+#endif
+    _adInfo["AdmobType"] = "1";
+    _adInfo["AdmobSizeEnum"] = "1";
+    
+    _admob->showAds(_adInfo, ProtocolAds::kPosBottom);
+}
+
+void MyAdsListener::onAdsResult(AdsResultCode code, const char* msg)
+{
+    log("OnAdsResult, code : %d, msg : %s", code, msg);
+}
+
+void MyAdsListener::onPlayerGetPoints(cocos2d::plugin::ProtocolAds* pAdsPlugin, int points)
+{
+    log("Player get points : %d", points);
+    
+    // @warning should add code to give game-money to player here
+    
+    // spend the points of player
+    if (pAdsPlugin != NULL) {
+        pAdsPlugin->spendPoints(points);
+    }
+}
+
