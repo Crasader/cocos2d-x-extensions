@@ -35,7 +35,7 @@ protected:
     virtual void runNextAction();
     virtual void addActionQueue(Node* pNode, FiniteTimeAction * pAction);
     void showAds();
-
+    void hideAds();
 private:
     ProtocolAds* _admob;
     TAdsInfo _adInfo;

@@ -34,7 +34,6 @@ bool View::initWithFactory(const std::string jsonFname, Factory<ViewModel>& fact
     _pRootViewModel->init();
     addChild(_pRootNode);
     setTouchParticle();
-    showAds();
 //    this->schedule(schedule_selector(View::update));
     return true;
 }
@@ -120,6 +119,11 @@ void View::showAds()
     _adInfo["AdmobSizeEnum"] = "1";
     
     _admob->showAds(_adInfo, ProtocolAds::kPosBottom);
+}
+
+void View::hideAds()
+{
+    _admob->hideAds(_adInfo);
 }
 
 void MyAdsListener::onAdsResult(AdsResultCode code, const char* msg)
