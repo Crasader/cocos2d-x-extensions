@@ -1,5 +1,5 @@
-#ifndef __oke-ya__valuemapwriter__
-#define __oke-ya__valuemapwriter__
+#ifndef __okeya__valuemapwriter__
+#define __okeya__valuemapwriter__
 
 #include "json/writer.h"
 #include "cocos2d.h"
@@ -161,4 +161,4 @@ public:
 
 }
 
-#endif /* defined(__oke-ya__valuemapwriter__) */
+#endif /* defined(__okeya__valuemapwriter__) */

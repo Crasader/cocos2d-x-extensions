@@ -1,5 +1,5 @@
-#ifndef __oke-ya__Factory__
-#define __oke-ya__Factory__
+#ifndef __okeya__Factory__
+#define __okeya__Factory__
 
 #include <map>
 #include <string>
@@ -84,4 +84,4 @@ Base * Factory<Base>::createWithInit(std::string type)
     return pCreator->createWithInit();
 }
 
-#endif /* defined(__oke-ya__Factory__) */
+#endif /* defined(__okeya__Factory__) */

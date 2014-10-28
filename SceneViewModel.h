@@ -1,5 +1,5 @@
-#ifndef __oke-ya__titlescene_SceneViewModel__
-#define __oke-ya__titlescene_SceneViewModel__
+#ifndef __okeya__titlescene_SceneViewModel__
+#define __okeya__titlescene_SceneViewModel__
 
 #include "ViewModel.h"
 
@@ -16,4 +16,4 @@ private:
     
 }
 
-#endif /* defined(__oke-ya__TitleSceneViewModel__) */
+#endif /* defined(__okeya__TitleSceneViewModel__) */

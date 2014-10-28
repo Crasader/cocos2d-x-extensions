@@ -1,5 +1,5 @@
-#ifndef __oke-ya__SceneManager__
-#define __oke-ya__SceneManager__
+#ifndef __okeya__SceneManager__
+#define __okeya__SceneManager__
 
 #include <iostream>
 #include "Factory.h"

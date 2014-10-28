@@ -1,5 +1,5 @@
-#ifndef __oke-ya__TitleScene__
-#define __oke-ya__TitleScene__
+#ifndef __okeya__TitleScene__
+#define __okeya__TitleScene__
 
 #include "cocos2d.h"
 #include "View.h"
@@ -13,4 +13,4 @@ public:
     CREATE_FUNC(TitleScene);
 };
 
-#endif /* defined(__oke-ya__TitleScene__) */
+#endif /* defined(__okeya__TitleScene__) */

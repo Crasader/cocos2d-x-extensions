@@ -22,3 +22,11 @@ XCode [Target] -> [appname iOS] -> [Build Phases] -> 'Link Binary With Libraries
 XCode [Target] -> [appname iOS] -> [Build Phases] ->  'Search Paths' -> [Header Search Paths] add $(SRCROOT)/../cocos2d/plugin/publish/protocols/include
 
 XCode [Target] -> [appname iOS] -> [Build Phases] -> 'Linking' -> [Other Linker Flags]  add '-ObjC'
+
+# Android
+
+```
+$ cd cocos2d/plugin/tools
+$ ./publish.sh
+$ ./gameDevGuide.sh
+```

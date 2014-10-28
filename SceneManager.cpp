@@ -1,6 +1,6 @@
 //
 //  SceneManager.cpp
-//  oke-ya
+//  okeya
 //
 //  Created by Atsushi Yoshida on 2014/08/05.
 //

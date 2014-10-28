@@ -1,5 +1,5 @@
-#ifndef __oke-ya__ViewModel__
-#define __oke-ya__ViewModel__
+#ifndef __okeya__ViewModel__
+#define __okeya__ViewModel__
 
 #include "cocos2d.h"
 #include "Factory.h"
@@ -115,4 +115,4 @@ private:
     void operator =(const ViewModel& src);
     ViewModel(const ViewModel& src);
 };
-#endif /* defined(__oke-ya__ViewModel__) */
+#endif /* defined(__okeya__ViewModel__) */
