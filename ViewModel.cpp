@@ -282,11 +282,11 @@ void ViewModel::bindLink(Factory<ViewModel>& factory, Node* pNode)
     auto pWidget = static_cast<Widget*>(pNode);
     pWidget->addTouchEventListener([&](Ref* pRef, Widget::TouchEventType type){
         if(type == Widget::TouchEventType::BEGAN){
+            disableTouch();
+            AudioEngine::play2d("sound/se_button_push_01.mp3");
             auto pNode = static_cast<Node*>(pRef);
             auto name = pNode->getName().substr(2, -1);
             auto scene = SceneManager::getInstance()->get(name);
-            AudioEngine::play2d("sound/se_button_push_01.mp3");
-            disableTouch();
             Director::getInstance()->replaceScene(scene);
         }
     });
