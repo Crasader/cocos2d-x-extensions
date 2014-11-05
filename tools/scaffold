@@ -1,0 +1,133 @@
+#!/usr/bin/env ruby
+# -*- coding: utf-8 -*-
+
+require 'fileutils'
+
+namespace = ARGV[0]
+scene = ARGV[1]
+
+if namespace.nil? || scene.nil?
+  puts <<EOS
+USAGE; scaffold NAMESPACE SCENE
+EOS
+exit 1
+end
+dir = "Classes/#{scene}Scene"
+FileUtils.mkdir_p(dir)
+
+_namespace = scene.downcase
+header_prefix = namespace.split(".").last + "__" + scene.downcase
+
+scene_view_model_header = <<EOS
+#ifndef __#{header_prefix}__SceneViewModel__
+#define __#{header_prefix}__SceneViewModel__
+
+#include "ViewModel.h"
+
+namespace #{_namespace}{
+    
+class SceneViewModel : public ViewModel
+{
+public:
+    bool init();
+    void onEnter();
+private:
+    bool fixName(Node* pNode);
+};
+    
+}
+
+#endif /* defined(__#{header_prefix}__SceneViewModel__) */
+EOS
+
+File.open(dir + "/SceneViewModel.h", "w:UTF-8") do |f|
+  f.write(scene_view_model_header)
+end
+
+scene_view_model_cpp = <<EOS
+#include "#{scene}/SceneViewModel.h"
+#include "#{scene}.h"
+
+namespace #{_namespace}{
+    
+using namespace cocos2d;
+    
+bool SceneViewModel::init()
+{
+    return true;
+}
+
+void SceneViewModel::onEnter()
+{
+}
+    
+bool SceneViewModel::fixName(Node* pNode)
+{
+    auto name = pNode->getName();
+    return true;
+}
+
+}
+EOS
+
+File.open(dir + "/SceneViewModel.cpp", "w:UTF-8") do |f|
+  f.write(scene_view_model_cpp)
+end
+
+
+scene_header = <<EOS
+#ifndef __#{header_prefix}__#{scene}Scene__
+#define __#{header_prefix}__#{scene}Scene__
+
+#include "cocos2d.h"
+#include "View.h"
+
+using namespace cocos2d;
+
+class #{scene}Scene : public View
+{
+public:
+    virtual bool init();
+        
+    void onExit();
+    CREATE_FUNC(#{scene}Scene);
+    
+};
+
+#endif /* defined(__#{header_prefix}__#{scene}Scene__) */
+EOS
+
+File.open("Classes/#{scene}Scene.h", "w:UTF-8") do |f|
+  f.write(scene_header)
+end
+
+scene_cpp = <<EOS
+#include "#{scene}Scene.h"
+#include "#{scene}Scene/SceneViewModel.h"
+
+using namespace #{_namespace};
+
+bool #{scene}Scene::init()
+{
+    Factory<ViewModel> factory;
+
+    factory.sign("root", new Creator<SceneViewModel,  ViewModel>);
+
+    if ( !View::initWithFactory("publish/#{scene}Scene.json", factory) )
+    {
+        return false;
+    }
+    showAds();
+    return true;
+}
+
+void #{scene}Scene::onExit()
+{
+    hideAds();
+    View::onExit();
+}
+EOS
+
+File.open("Classes/#{scene}Scene.cpp", "w:UTF-8") do |f|
+  f.write(scene_cpp)
+end
