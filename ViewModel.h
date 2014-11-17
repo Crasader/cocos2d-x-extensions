@@ -9,8 +9,6 @@
 #include "extensions/GUI/CCScrollView/CCScrollView.h"
 #include "SupportFunctions.h"
 #include "BGMPlayer.h"
-#include "Naming.h"
-#include "LocalCache.h"
 
 using namespace cocos2d;
 using namespace cocos2d::extension;

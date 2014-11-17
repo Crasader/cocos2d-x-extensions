@@ -5,7 +5,6 @@
 #include "ViewModel.h"
 #include "Factory.h"
 #include "BGMPlayer.h"
-#include "ScrollViewModel.h"
 #include "ProtocolAds.h"
 
 using namespace cocos2d::plugin;
