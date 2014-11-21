@@ -257,24 +257,10 @@ void ViewModel::bindToggle(Factory<ViewModel>& factory, Node* pNode)
             auto pNode = static_cast<Node*>(pRef);
             auto name = pNode->getName().substr(2, -1);
             auto pTarget = getNode(name);
-            if(pTarget->isVisible()){
-                Director::getInstance()->getEventDispatcher()->pauseEventListenersForTarget(pTarget, true);
-                auto effect = Sequence::create(FadeOut::create(0.2f),
-                                               CallFuncN::create([](Node* pNode){
-                    pNode->setVisible(false);
-                    auto children = pNode->getChildren();
-                }), nullptr);
-                pTarget->runAction(effect);
-            }else{
-                Director::getInstance()->getEventDispatcher()->resumeEventListenersForTarget(pTarget, true);
-                auto effect = Sequence::create(FadeIn::create(0.2f),
-                                               CallFuncN::create([](Node* pNode){
-                    pNode->setVisible(true);
-                }), nullptr);
-                pTarget->runAction(effect);
-            }
+            toggle(pTarget);
         }
     });
+    pWidget->setSwallowTouches(true);
 }
 
 void ViewModel::bindLink(Factory<ViewModel>& factory, Node* pNode)
@@ -648,3 +634,30 @@ int ViewModel::random(const int max)
     std::uniform_int_distribution<int> dist(0, max);
     return dist(randomEngine);
 }
+
+void ViewModel::toggle(const std::string& name)
+{
+    toggle(getNode(name));
+}
+
+void ViewModel::toggle(Node* pNode)
+{
+    if(pNode->isVisible()){
+        Director::getInstance()->getEventDispatcher()->pauseEventListenersForTarget(pNode, true);
+        auto effect = Sequence::create(FadeOut::create(0.2f),
+                                       CallFuncN::create([](Node* pNode){
+            pNode->setVisible(false);
+            auto children = pNode->getChildren();
+        }), nullptr);
+        pNode->runAction(effect);
+    }else{
+        Director::getInstance()->getEventDispatcher()->resumeEventListenersForTarget(pNode, true);
+        auto effect = Sequence::create(FadeIn::create(0.2f),
+                                       CallFuncN::create([](Node* pNode){
+            pNode->setVisible(true);
+        }), nullptr);
+        pNode->runAction(effect);
+    }
+
+}
+
