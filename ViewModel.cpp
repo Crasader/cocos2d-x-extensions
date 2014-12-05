@@ -645,16 +645,19 @@ void ViewModel::toggle(Node* pNode)
     if(pNode->isVisible()){
         Director::getInstance()->getEventDispatcher()->pauseEventListenersForTarget(pNode, true);
         auto effect = Sequence::create(FadeOut::create(0.2f),
-                                       CallFuncN::create([](Node* pNode){
-            pNode->setVisible(false);
-            auto children = pNode->getChildren();
+                                       CallFuncN::create([&](Node* pNode){
+            auto name = pNode->getName();
+            disableTouch(name);
+            hide(name);
         }), nullptr);
         pNode->runAction(effect);
     }else{
         Director::getInstance()->getEventDispatcher()->resumeEventListenersForTarget(pNode, true);
         auto effect = Sequence::create(FadeIn::create(0.2f),
-                                       CallFuncN::create([](Node* pNode){
-            pNode->setVisible(true);
+                                       CallFuncN::create([&](Node* pNode){
+            auto name = pNode->getName();
+            enableTouch(name);
+            show(name);
         }), nullptr);
         pNode->runAction(effect);
     }
