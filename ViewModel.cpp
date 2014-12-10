@@ -647,6 +647,7 @@ void ViewModel::toggle(Node* pNode)
         auto effect = Sequence::create(FadeOut::create(0.2f),
                                        CallFuncN::create([&](Node* pNode){
             auto name = pNode->getName();
+            pNode->getParent()->reorderChild(pNode, 0);
             disableTouch(name);
             hide(name);
         }), nullptr);
@@ -655,6 +656,7 @@ void ViewModel::toggle(Node* pNode)
         Director::getInstance()->getEventDispatcher()->resumeEventListenersForTarget(pNode, true);
         auto effect = Sequence::create(FadeIn::create(0.2f),
                                        CallFuncN::create([&](Node* pNode){
+            pNode->getParent()->reorderChild(pNode, 100);
             auto name = pNode->getName();
             enableTouch(name);
             show(name);
