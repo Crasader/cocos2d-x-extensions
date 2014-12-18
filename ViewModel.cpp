@@ -11,7 +11,9 @@ using namespace cocos2d::ui;
 const std::string ViewModel::LabelPrefix  = "s_";
 const std::string ViewModel::SpritePrefix = "i_";
 const std::string ViewModel::ProgressPrefix = "p_";
+const std::string ViewModel::LinkPhysicsPrefix = "g_";
 const std::vector<std::string> ViewModel::ObserveSuffixes = {"Layer", "Area", "Animation"};
+
 const int ViewModel::DefaultSize = 1000;
 
 ViewModel::ViewModel() : _pParent(nullptr)
@@ -164,6 +166,7 @@ void ViewModel::bind(Node* pNode, Factory<ViewModel>& factory)
     static const std::string instancePrefix = "c_";
     static const std::string togglePrefix = "t_";
     static const std::string linkPrefix = "l_";
+
     static const std::string animationPrefix = "a_";
     static const std::string watchPrefix = "w_";
     static const std::string sep = "_";
@@ -184,6 +187,8 @@ void ViewModel::bind(Node* pNode, Factory<ViewModel>& factory)
     }else if(prefix == togglePrefix){
         bindToggle(factory, pNode);
     }else if(prefix == linkPrefix){
+        bindLink(factory, pNode);
+    }else if(prefix == ViewModel::LinkPhysicsPrefix){
         bindLink(factory, pNode);
     }else if(prefix == watchPrefix || prefix == ViewModel::ProgressPrefix){
         _watches.insert({name, pNode});
@@ -271,8 +276,15 @@ void ViewModel::bindLink(Factory<ViewModel>& factory, Node* pNode)
             disableTouch();
             AudioEngine::play2d("sound/se_button_push_01.mp3");
             auto pNode = static_cast<Node*>(pRef);
+            auto prefix = pNode->getName().substr(0, 2);
             auto name = pNode->getName().substr(2, -1);
-            auto scene = SceneManager::getInstance()->get(name);
+            Scene* scene;
+            if(prefix == ViewModel::LinkPhysicsPrefix){
+                scene = SceneManager::getInstance()->get(name, -1.0f);
+            }else{
+                scene = SceneManager::getInstance()->get(name);
+            }
+
             Director::getInstance()->replaceScene(scene);
         }
     });

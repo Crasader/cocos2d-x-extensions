@@ -88,6 +88,7 @@ protected:
     void bindLink(Factory<ViewModel>& factory, Node* pNode);
 
     static const std::string LabelPrefix;
+    static const std::string LinkPhysicsPrefix;
     static const std::string SpritePrefix;
     static const std::string ProgressPrefix;
     

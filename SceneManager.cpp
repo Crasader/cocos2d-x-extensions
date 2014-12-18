@@ -25,7 +25,14 @@ Scene* SceneManager::get(const std::string& name){
 Scene* SceneManager::get(const std::string& name, float predicate){
     Director::getInstance()->getEventDispatcher()->setEnabled(false);
     cocostudio::ActionManagerEx::getInstance()->destroyInstance();
-    auto scene = Scene::create();
+    Scene* scene;
+    if(predicate < 0.0){
+        // bool で Physics にするかを判断したかったが bool が float に暗黙で cast されるためうまくオーバーロード出来ないので苦肉の策
+        scene = Scene::createWithPhysics();
+    }else{
+        scene = Scene::create();
+    }
+
     auto layer = _scenes.createWithInit(name);
     scene->addChild(layer);
     predicate = 2.0f;
