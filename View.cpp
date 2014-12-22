@@ -47,7 +47,7 @@ void View::setTouchParticle()
     listener->setSwallowTouches(true);
     listener->onTouchBegan = [&](Touch* pTouch, Event* pEvent){
         const auto location = pTouch->getLocation();
-        auto* pParticle = ParticleSystemQuad::create("particles/Galaxy.plist");
+        auto* pParticle = ParticleSystemQuad::create("ui/Particles/Galaxy.plist");
         pParticle->setPosition(location);
         pParticle->setGlobalZOrder(100.0f);
         pParticle->setScale(0.5);
