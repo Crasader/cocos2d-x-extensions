@@ -22,7 +22,7 @@ class View : public Layer
 public:
     View();
     virtual ~View();
-    virtual bool initWithFactory(std::string jsonFname, Factory<ViewModel>& factory);
+    virtual bool initWithFactory(std::string fname  , Factory<ViewModel>& factory);
     virtual void onExit();
     virtual void onEnter();
     virtual void onEnterTransitionDidFinish();

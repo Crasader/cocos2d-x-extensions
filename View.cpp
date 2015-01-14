@@ -20,12 +20,18 @@ View::~View()
     }
 }
 
-bool View::initWithFactory(const std::string jsonFname, Factory<ViewModel>& factory)
+bool View::initWithFactory(const std::string fname, Factory<ViewModel>& factory)
 {
     if ( !Layer::init() ) {
         return false;
     }
-    _pRootNode = SceneReader::getInstance()->createNodeWithSceneFile(jsonFname.c_str());
+    auto ext = fname.substr(fname.find_last_of("."));
+    if(ext == ".csb"){
+        _pRootNode = CSLoader::createNode(fname.c_str());
+    }else{
+        _pRootNode = SceneReader::getInstance()->createNodeWithSceneFile(fname.c_str());
+    }
+
     _pRootViewModel = factory.create("root");
     _pRootViewModel->retain();
     _pRootViewModel->setRoot(_pRootViewModel);
