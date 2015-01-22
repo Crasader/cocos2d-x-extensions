@@ -239,6 +239,7 @@ void ViewModel::bind(Node* pNode, Factory<ViewModel>& factory)
 ViewModel* ViewModel::bindInstance(Factory<ViewModel>& factory, Node* pNode, const std::string& name)
 {
     auto* pViewModel = factory.create(name);
+    CCASSERT(pViewModel, ("factory " + name + " is not defined").c_str());
     pViewModel->setName(pNode->getName());
     pViewModel->setParent(this);
     pViewModel->setRoot(_pRoot);
