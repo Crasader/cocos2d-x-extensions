@@ -83,6 +83,7 @@ public:
 
 protected:
     virtual ViewModel* bindInstance(Factory<ViewModel>& factory, Node* pNode, const std::string& name);
+    virtual void removeFromParent(ViewModel*);
     virtual void countUp(const std::string& name, const int count);
     void bindToggle(Factory<ViewModel>& factory, Node* pNode);
     void bindLink(Factory<ViewModel>& factory, Node* pNode);
@@ -110,7 +111,8 @@ protected:
     virtual void addActionQueue(FiniteTimeAction* pAction);
     virtual void addActionQueue(Node* pNode, Actions& arrayOfActions);
     bool isRectContains(Node* pNode, const Vec2& point);
-
+    Node* pushView(const std::string& fname, Factory<ViewModel>& factory);
+    void popView();
 private:
     void setParent(ViewModel* pParent);
     void operator =(const ViewModel& src);

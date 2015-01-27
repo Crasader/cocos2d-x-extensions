@@ -254,6 +254,19 @@ ViewModel* ViewModel::bindInstance(Factory<ViewModel>& factory, Node* pNode, con
     return pViewModel;
 }
 
+void ViewModel::removeFromParent(ViewModel* pViewModel)
+{
+    auto& children = getChildren();
+    ssize_t index = children.getIndex(pViewModel);
+    if( index != CC_INVALID_INDEX ){
+        pViewModel->getNode()->removeFromParent();
+        pViewModel->setParent(nullptr);
+        pViewModel->release();
+        children.erase(index);
+    }
+
+}
+
 void ViewModel::bindToggle(Factory<ViewModel>& factory, Node* pNode)
 {
     auto pWidget = static_cast<Widget*>(pNode);
@@ -679,3 +692,17 @@ void ViewModel::toggle(Node* pNode)
 
 }
 
+Node* ViewModel::pushView(const std::string& name, Factory<ViewModel>& factory)
+{
+    auto view = View::create();
+    view->initWithFactory(name, factory);
+    Director::getInstance()->getRunningScene()->addChild(view);
+    return view;
+}
+
+void ViewModel::popView()
+{
+    auto& children = Director::getInstance()->getRunningScene()->getChildren();
+    auto* node = children.back();
+    node->removeFromParent();
+}
