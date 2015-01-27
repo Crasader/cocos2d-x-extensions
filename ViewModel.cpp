@@ -13,6 +13,7 @@ const std::string ViewModel::SpritePrefix = "i_";
 const std::string ViewModel::ProgressPrefix = "p_";
 const std::string ViewModel::LinkPhysicsPrefix = "g_";
 const std::vector<std::string> ViewModel::ObserveSuffixes = {"Layer", "Area", "Animation"};
+const std::vector<std::string> ViewModel::ObservePrefixes = {"Character"};
 
 const int ViewModel::DefaultSize = 1000;
 
@@ -218,13 +219,20 @@ void ViewModel::bind(Node* pNode, Factory<ViewModel>& factory)
             }
         }
     }else{
-        for(auto observeSuffix: ViewModel::ObserveSuffixes){
+        for(auto& observeSuffix: ViewModel::ObserveSuffixes){
             auto i = name.find_last_of(observeSuffix.at(0));
             if(i == std::string::npos){
                 continue;
             }
             std::string suffix = name.substr(i, -1);
             if(suffix == observeSuffix){
+                _watches.insert({name, pNode});
+                break;
+            }
+        }
+        for(auto& observePrefix: ViewModel::ObservePrefixes){
+            std::string prefix = name.substr(0, observePrefix.size());
+            if(prefix == observePrefix){
                 _watches.insert({name, pNode});
                 break;
             }
@@ -705,4 +713,17 @@ void ViewModel::popView()
     auto& children = Director::getInstance()->getRunningScene()->getChildren();
     auto* node = children.back();
     node->removeFromParent();
+}
+
+spine::SkeletonAnimation* ViewModel::replaceToAnimation(const std::string& nodeName, const std::string& animationName)
+{
+    auto skeletonNode = spine::SkeletonAnimation::createWithFile(animationName + ".json",
+                                                                 animationName + ".atlas", 0.2f);
+    auto base = getNode(nodeName);
+    auto pos = base->getPosition();
+    skeletonNode->setPosition(base->getPosition());
+    skeletonNode->setScale(base->getScale());
+    base->getParent()->addChild(skeletonNode);
+    base->removeFromParent();
+    return skeletonNode;
 }

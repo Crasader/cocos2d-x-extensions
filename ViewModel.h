@@ -9,6 +9,7 @@
 #include "extensions/GUI/CCScrollView/CCScrollView.h"
 #include "SupportFunctions.h"
 #include "BGMPlayer.h"
+#include <spine/SkeletonAnimation.h>
 
 using namespace cocos2d;
 using namespace cocos2d::extension;
@@ -80,7 +81,7 @@ public:
     virtual int load(const std::string& name);
     void setName(const std::string name);
     const std::string getName() const;
-
+    spine::SkeletonAnimation* replaceToAnimation(const std::string& nodeName, const std::string& animationName);
 protected:
     virtual ViewModel* bindInstance(Factory<ViewModel>& factory, Node* pNode, const std::string& name);
     virtual void removeFromParent(ViewModel*);
@@ -94,6 +95,7 @@ protected:
     static const std::string ProgressPrefix;
     
     static const std::vector<std::string> ObserveSuffixes;
+    static const std::vector<std::string> ObservePrefixes;
     std::map<std::string, Node*> _watches;
     std::string _name;
     ViewModel* _pRoot;
@@ -113,6 +115,7 @@ protected:
     bool isRectContains(Node* pNode, const Vec2& point);
     Node* pushView(const std::string& fname, Factory<ViewModel>& factory);
     void popView();
+    
 private:
     void setParent(ViewModel* pParent);
     void operator =(const ViewModel& src);
