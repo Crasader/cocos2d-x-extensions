@@ -33,6 +33,10 @@ bool View::initWithFactory(const std::string fname, Factory<ViewModel>& factory)
     }
 
     _pRootViewModel = factory.create("root");
+    if(_pRootViewModel == nullptr){
+        factory.sign("root", new Creator<ViewModel, ViewModel>);
+        _pRootViewModel = factory.create("root");
+    }
     _pRootViewModel->retain();
     _pRootViewModel->setRoot(_pRootViewModel);
     _pRootViewModel->setNode(this);
