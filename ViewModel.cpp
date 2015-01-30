@@ -24,6 +24,7 @@ ViewModel::ViewModel() : _pParent(nullptr)
 ViewModel::~ViewModel()
 {
     _children.clear();
+    _watches.clear();
     _pParent = nullptr;
     _pNode = nullptr;
 }
@@ -718,7 +719,7 @@ void ViewModel::popView()
 spine::SkeletonAnimation* ViewModel::replaceToAnimation(const std::string& nodeName, const std::string& animationName)
 {
     auto skeletonNode = spine::SkeletonAnimation::createWithFile(animationName + ".json",
-                                                                 animationName + ".atlas", 0.2f);
+                                                                 animationName + ".atlas", 1);
     auto base = getNode(nodeName);
     auto pos = base->getPosition();
     skeletonNode->setPosition(base->getPosition());
