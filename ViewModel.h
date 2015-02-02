@@ -97,7 +97,7 @@ protected:
     
     static const std::vector<std::string> ObserveSuffixes;
     static const std::vector<std::string> ObservePrefixes;
-    std::map<std::string, Node*> _watches;
+    std::unordered_map<std::string, Node*> _watches;
     std::string _name;
     ViewModel* _pRoot;
     ViewModel* _pParent;

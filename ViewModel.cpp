@@ -728,5 +728,6 @@ spine::SkeletonAnimation* ViewModel::replaceToAnimation(const std::string& nodeN
     skeletonNode->setScale(base->getScale());
     base->getParent()->addChild(skeletonNode);
     base->removeFromParent();
+    _watches[nodeName] = skeletonNode;
     return skeletonNode;
 }
