@@ -443,31 +443,21 @@ void ViewModel::setList(Factory<ViewModel>& factory, ValueVector* pVec, const Li
 
 void ViewModel::setList(const std::string& areaName, const std::string& listTemplateName, Factory<ViewModel>&factory, ValueVector& array)
 {
-//    auto pLayer = getChildByName(areaName)->getNode();
-    auto pLayer = static_cast<cocos2d::ui::ScrollView*>(getNode(areaName));
+    auto pLayer = static_cast<cocos2d::ui::ListView*>(getNode(areaName));
     auto pTmpl = static_cast<Widget*>(_pRoot->getNode(listTemplateName));
 
     int i = 0;
-    int x = 160;
-    int y = 400;
     for(auto& values: array){
         auto pClone = pTmpl->clone();
-        auto name = "c_li_" + supportfunctions::to_string(i);
-        pClone->setName(name);
-        pClone->setPosition(Vec2(x, y));
+        auto pNode = pClone->getChildByName("c_SummaryViewModel");
         pLayer->addChild(pClone);
-        auto vm = _pRoot->bindInstance(factory, pClone, "li");
+        auto vm = _pRoot->bindInstance(factory, pNode, "c_SummaryViewModel");
         vm->update(values);
         i++;
-        y += 130;
     }
-    if (y > 480) {
-        pLayer->setInnerContainerSize(Size(640, y - 40));
-    } else {
-        pLayer->setInnerContainerSize(Size(640, 480));
-    }
-    
-    pTmpl->setVisible(false);
+    pTmpl->removeFromParent();
+    pLayer->refreshView();
+    _pRoot->getNode("w_PanelTemplete")->removeFromParent();
 }
 
 
