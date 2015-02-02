@@ -88,9 +88,9 @@ void ViewModel::observeEvent()
 
 bool ViewModel::isRectContains(Node* pNode, const Vec2& point)
 {
-    auto touchLocation = pNode->getParent()->convertToNodeSpace(point);
-    
-    auto rect = pNode->getBoundingBox();
+    auto touchLocation = pNode->convertToNodeSpace(point);
+    auto s = pNode->getContentSize();
+    auto rect = Rect(0, 0, s.width, s.height);
     
     if(static_cast<Widget*>(pNode)->getRotation() == 0){
         if(rect.containsPoint(touchLocation)){
