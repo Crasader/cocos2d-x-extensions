@@ -21,9 +21,9 @@ class ViewModel : public Ref
 {
 public:
     struct ListConfig{
-        std::string listTemplate = "ListBox";
+        std::string listTemplate = "PanelSummary";
         Vec2 origin = Vec2(170, 400);
-        std::string contentAreaName = "w_ScrollArea";
+        std::string contentAreaName = "ScrollArea";
         Size contentAreaSize = Size(640, 480);
         int verticalMargin = 130;
     };
