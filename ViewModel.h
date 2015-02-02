@@ -44,6 +44,7 @@ public:
     virtual Vector<ViewModel*>& getChildren();
     virtual ViewModel* getChildByName(const std::string& name);
     virtual ViewModel* getParent();
+    virtual ViewModel* getRoot(const std::string& name);
     virtual View* getView();
     void observeEvent();
     const Rect getBoundingBox() const;

@@ -26,6 +26,8 @@ public:
     virtual void onExit();
     virtual void onEnter();
     virtual void onEnterTransitionDidFinish();
+    ViewModel* getRootViewModel();
+    void setName(const std::string& name);
     CREATE_FUNC(View);
 protected:
     ViewModel* _pRootViewModel;

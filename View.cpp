@@ -31,7 +31,7 @@ bool View::initWithFactory(const std::string fname, Factory<ViewModel>& factory)
     }else{
         _pRootNode = SceneReader::getInstance()->createNodeWithSceneFile(fname.c_str());
     }
-
+    setName(fname);
     _pRootViewModel = factory.create("root");
     if(_pRootViewModel == nullptr){
         factory.sign("root", new Creator<ViewModel, ViewModel>);
@@ -134,6 +134,18 @@ void View::showAds()
 void View::hideAds()
 {
     _admob->hideAds(_adInfo);
+}
+
+ViewModel* View::getRootViewModel()
+{
+    return _pRootViewModel;
+}
+
+void View::setName(const std::string& name)
+{
+    auto start = name.find_last_of("/") + 1;
+    auto end = name.find_last_of(".");
+    Layer::setName(name.substr(start, end - start));
 }
 
 void MyAdsListener::onAdsResult(AdsResultCode code, const char* msg)

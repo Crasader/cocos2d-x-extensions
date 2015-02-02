@@ -705,6 +705,7 @@ Node* ViewModel::pushView(const std::string& name, Factory<ViewModel>& factory)
 {
     auto view = View::create();
     view->initWithFactory(name, factory);
+    view->setName(name);
     Director::getInstance()->getRunningScene()->addChild(view);
     return view;
 }
@@ -712,8 +713,19 @@ Node* ViewModel::pushView(const std::string& name, Factory<ViewModel>& factory)
 void ViewModel::popView()
 {
     auto& children = Director::getInstance()->getRunningScene()->getChildren();
-    auto* node = children.back();
-    node->removeFromParent();
+    auto* view = static_cast<View*>(children.back());
+    view->removeFromParent();
+}
+
+ViewModel* ViewModel::getRoot(const std::string& name)
+{
+    auto& children = Director::getInstance()->getRunningScene()->getChildren();
+    for(auto& child: children){
+        if(child->getName() == name){
+            return static_cast<View*>(child)->getRootViewModel();
+        }
+    }
+    return nullptr;
 }
 
 spine::SkeletonAnimation* ViewModel::replaceToAnimation(const std::string& nodeName, const std::string& animationName)
