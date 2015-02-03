@@ -691,7 +691,7 @@ void ViewModel::toggle(Node* pNode)
 
 }
 
-Node* ViewModel::pushView(const std::string& name, Factory<ViewModel>& factory)
+View* ViewModel::pushView(const std::string& name, Factory<ViewModel>& factory)
 {
     auto view = View::create();
     view->initWithFactory(name, factory);

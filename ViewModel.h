@@ -114,7 +114,7 @@ protected:
     virtual void addActionQueue(FiniteTimeAction* pAction);
     virtual void addActionQueue(Node* pNode, Actions& arrayOfActions);
     bool isRectContains(Node* pNode, const Vec2& point);
-    Node* pushView(const std::string& fname, Factory<ViewModel>& factory);
+    View* pushView(const std::string& fname, Factory<ViewModel>& factory);
     void popView();
     
 private:
