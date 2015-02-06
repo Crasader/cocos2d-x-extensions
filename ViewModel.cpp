@@ -294,6 +294,11 @@ void ViewModel::bindToggle(Factory<ViewModel>& factory, Node* pNode)
 void ViewModel::bindLink(Factory<ViewModel>& factory, Node* pNode)
 {
     auto pWidget = static_cast<Widget*>(pNode);
+    auto scale = ScaleBy::create(0.8f, 1.04f);
+    auto action = Repeat::create(Sequence::create(scale, scale->reverse(), CallFuncN::create([](Node* pNode){
+        pNode->setScale(1.0f);
+    }),nullptr), -1);
+    pNode->runAction(action);
     pWidget->addTouchEventListener([&](Ref* pRef, Widget::TouchEventType type){
         if(type == Widget::TouchEventType::BEGAN){
             disableTouch();
