@@ -460,8 +460,11 @@ void ViewModel::setList(const std::string& areaName, const std::string& listTemp
         vm->update(values);
         i++;
     }
-    _pRoot->getNode("w_PanelTemplete")->removeFromParent();
-    pLayer->refreshView();
+    auto pPanel = _pRoot->getNode("w_PanelTemplete");
+    if (pPanel != nullptr) {
+        pPanel->removeFromParent();
+        pLayer->refreshView();
+    }
 }
 
 

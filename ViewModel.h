@@ -83,6 +83,9 @@ public:
     void setName(const std::string name);
     const std::string getName() const;
     spine::SkeletonAnimation* replaceToAnimation(const std::string& nodeName, const std::string& animationName);
+    virtual void addActionQueue(Node* pNode, FiniteTimeAction* pAction);
+    virtual void addActionQueue(FiniteTimeAction* pAction);
+    virtual void addActionQueue(Node* pNode, Actions& arrayOfActions);
 protected:
     virtual ViewModel* bindInstance(Factory<ViewModel>& factory, Node* pNode, const std::string& name);
     virtual void removeFromParent(ViewModel*);
@@ -110,9 +113,6 @@ protected:
     std::queue< std::tuple<Node*, FiniteTimeAction*> > _actionQueue;
     virtual void runNextAction();
     inline void actionStart(){ runNextAction(); };
-    virtual void addActionQueue(Node* pNode, FiniteTimeAction* pAction);
-    virtual void addActionQueue(FiniteTimeAction* pAction);
-    virtual void addActionQueue(Node* pNode, Actions& arrayOfActions);
     bool isRectContains(Node* pNode, const Vec2& point);
     View* pushView(const std::string& fname, Factory<ViewModel>& factory);
     void popView();
