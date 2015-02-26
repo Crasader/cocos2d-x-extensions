@@ -294,10 +294,24 @@ void ViewModel::bindToggle(Factory<ViewModel>& factory, Node* pNode)
 void ViewModel::bindLink(Factory<ViewModel>& factory, Node* pNode)
 {
     auto pWidget = static_cast<Widget*>(pNode);
-    auto scale = ScaleBy::create(0.8f, 1.04f);
-    auto action = Repeat::create(Sequence::create(scale, scale->reverse(), CallFuncN::create([](Node* pNode){
-        pNode->setScale(1.0f);
-    }),nullptr), -1);
+    auto scale = ScaleBy::create(0.8f, 1.15f);
+    auto action = Repeat::create(Sequence::create(scale, scale->reverse(), nullptr), -1);
+    auto name = pNode->getName();
+    if (name == "l_CostumeRoomScene" || name == "g_SummonRoomScene" ||
+        name == "l_MyRoomScene" || name == "l_WorkScene") {
+        auto scale = ScaleBy::create(1.2f, 1.10f);
+        auto wait  = DelayTime::create(0.5f);
+        action = Repeat::create(
+             Sequence::create(scale, scale->reverse(), wait,
+                              CallFuncN::create([](Node* pNode){
+                 static_cast<Button*>(pNode)->setBrightStyle(BrightStyle::HIGHLIGHT);
+             }), wait, wait, wait, wait,
+                              CallFuncN::create([](Node* pNode){
+                 static_cast<Button*>(pNode)->setBrightStyle(BrightStyle::NORMAL);
+             }), wait, nullptr), -1);
+    }
+    pNode->stopAllActions();
+    pNode->setScale(1.0f);
     pNode->runAction(action);
     pWidget->addTouchEventListener([&](Ref* pRef, Widget::TouchEventType type){
         if(type == Widget::TouchEventType::BEGAN){
@@ -485,19 +499,21 @@ void ViewModel::setDetail(const std::string& templateName,
     callback(pVm, pVmap);
 }
 
-void ViewModel::countUp(const std::string& name, const int count)
+void ViewModel::countUp(const std::string& iconName, const std::string& countName, const int count)
 {
-    auto pCounter = getNode(name);
-    auto countAction = CallFuncN::create([&](Node* pNode){
-        auto action = ActionManagerEx::getInstance()->getActionByName("BattleStatus.ExportJson", "SoulGet");
-        action->play();
+    auto pIcon    = getNode(iconName);
+    auto pCounter = getNode(countName);
+    auto countAction = CallFuncN::create([&, pIcon](Node* pNode){
         auto pCounter = static_cast<Text*>(pNode);
         int count = std::atoi(pCounter->getString().c_str());
         count ++;
         pCounter->setString(supportfunctions::to_string(count));
+        auto scale = ScaleBy::create(0.4f, 1.4f);
+        auto action = Sequence::create(scale, scale->reverse(), scale, scale->reverse(), nullptr);
+        pIcon->runAction(action);
     });
-    auto pRepeat = Repeat::create(Sequence::create(countAction, DelayTime::create(0.01f), nullptr), count);
-    addActionQueue(pCounter, pRepeat);
+    auto pRepeat = Repeat::create(Sequence::create(countAction, DelayTime::create(0.02f), nullptr), count);
+    getRoot("BattleScene")->addActionQueue(pCounter, pRepeat);
 }
 
 void ViewModel::onExit()
