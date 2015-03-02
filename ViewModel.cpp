@@ -463,6 +463,7 @@ void ViewModel::setList(Factory<ViewModel>& factory, ValueVector* pVec, const Li
 void ViewModel::setList(const std::string& areaName, const std::string& listTemplateName, Factory<ViewModel>&factory, ValueVector& array)
 {
     auto pLayer = static_cast<cocos2d::ui::ListView*>(getNode(areaName));
+    pLayer->removeAllChildren();
     auto pTmpl = static_cast<Widget*>(_pRoot->getNode(listTemplateName));
 
     int i = 0;
