@@ -86,6 +86,7 @@ public:
     virtual void addActionQueue(Node* pNode, FiniteTimeAction* pAction);
     virtual void addActionQueue(FiniteTimeAction* pAction);
     virtual void addActionQueue(Node* pNode, Actions& arrayOfActions);
+    virtual void runNextAction();
 protected:
     virtual ViewModel* bindInstance(Factory<ViewModel>& factory, Node* pNode, const std::string& name);
     virtual void removeFromParent(ViewModel*);
@@ -111,7 +112,6 @@ protected:
     virtual bool fixName(Node* pNode);
     
     std::queue< std::tuple<Node*, FiniteTimeAction*> > _actionQueue;
-    virtual void runNextAction();
     inline void actionStart(){ runNextAction(); };
     bool isRectContains(Node* pNode, const Vec2& point);
     View* pushView(const std::string& fname, Factory<ViewModel>& factory);
