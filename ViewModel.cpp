@@ -91,7 +91,7 @@ bool ViewModel::isRectContains(Node* pNode, const Vec2& point)
     auto touchLocation = pNode->convertToNodeSpace(point);
     auto s = pNode->getContentSize();
     auto rect = Rect(0, 0, s.width, s.height);
-    
+    return rect.containsPoint(touchLocation);
     if(static_cast<Widget*>(pNode)->getRotation() == 0){
         if(rect.containsPoint(touchLocation)){
             return true;
@@ -99,39 +99,39 @@ bool ViewModel::isRectContains(Node* pNode, const Vec2& point)
             return false;
         }
     }
-    
-    auto size = pNode->getContentSize();
-    Point v[4] = {
-        Point(0,0),
-        Point(0, size.height),
-        Point(size.width, size.height),
-        Point(size.width, 0),
-    };
-    
-    auto affine = pNode->getNodeToParentAffineTransform();
-    auto name = pNode->getName();
-    for(int i = 0; i < 4; i++) {
-        v[i] = PointApplyAffineTransform(v[i], affine);
-    }
-    Point vec[4] = {
-        v[1] - v[0],
-        v[2] - v[1],
-        v[3] - v[2],
-        v[0] - v[3],
-    };
-    
-    Point vecP[4] = {
-        v[0] - touchLocation,
-        v[1] - touchLocation,
-        v[2] - touchLocation,
-        v[3] - touchLocation,
-    };
-    
-    for(int i = 0; i < 4; i++){
-        if((vec[i].x * vecP[i].y - vec[i].y * vecP[i].x) < 0){
-            return false;
-        }
-    }
+//
+//    auto size = pNode->getContentSize();
+//    Point v[4] = {
+//        Point(0,0),
+//        Point(0, size.height),
+//        Point(size.width, size.height),
+//        Point(size.width, 0),
+//    };
+//    
+//    auto affine = pNode->getNodeToParentAffineTransform();
+//    auto name = pNode->getName();
+//    for(int i = 0; i < 4; i++) {
+//        v[i] = PointApplyAffineTransform(v[i], affine);
+//    }
+//    Point vec[4] = {
+//        v[1] - v[0],
+//        v[2] - v[1],
+//        v[3] - v[2],
+//        v[0] - v[3],
+//    };
+//    
+//    Point vecP[4] = {
+//        v[0] - touchLocation,
+//        v[1] - touchLocation,
+//        v[2] - touchLocation,
+//        v[3] - touchLocation,
+//    };
+//    
+//    for(int i = 0; i < 4; i++){
+//        if((vec[i].x * vecP[i].y - vec[i].y * vecP[i].x) < 0){
+//            return false;
+//        }
+//    }
     return true;
 }
 
