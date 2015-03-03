@@ -299,16 +299,18 @@ void ViewModel::bindLink(Factory<ViewModel>& factory, Node* pNode)
     auto name = pNode->getName();
     if (name == "l_CostumeRoomScene" || name == "g_SummonRoomScene" ||
         name == "l_MyRoomScene" || name == "l_WorkScene") {
-        auto scale = ScaleBy::create(1.2f, 1.10f);
-        auto wait  = DelayTime::create(0.5f);
+        auto scale = ScaleBy::create(0.8f, 1.15f);
+        auto wait  = DelayTime::create(0.8f);
+        auto brightOn  = CallFuncN::create([](Node* pNode){
+            static_cast<Button*>(pNode)->setBrightStyle(BrightStyle::HIGHLIGHT);
+        });
+        auto brightOff = CallFuncN::create([](Node* pNode){
+            static_cast<Button*>(pNode)->setBrightStyle(BrightStyle::NORMAL);
+        });
         action = Repeat::create(
-             Sequence::create(scale, scale->reverse(), wait,
-                              CallFuncN::create([](Node* pNode){
-                 static_cast<Button*>(pNode)->setBrightStyle(BrightStyle::HIGHLIGHT);
-             }), wait, wait, wait, wait,
-                              CallFuncN::create([](Node* pNode){
-                 static_cast<Button*>(pNode)->setBrightStyle(BrightStyle::NORMAL);
-             }), wait, nullptr), -1);
+             Sequence::create(wait, wait, brightOn, wait, wait,
+                              brightOff, wait, scale, scale->reverse(),
+                              scale, scale->reverse(), nullptr), -1);
     }
     pNode->stopAllActions();
     pNode->setScale(1.0f);
