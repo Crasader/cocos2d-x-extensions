@@ -463,28 +463,17 @@ void ViewModel::setList(Factory<ViewModel>& factory, ValueVector* pVec, const Li
 void ViewModel::setList(const std::string& areaName, const std::string& listTemplateName, Factory<ViewModel>&factory, ValueVector& array)
 {
     auto pLayer = static_cast<cocos2d::ui::ListView*>(getNode(areaName));
-    auto& children = pLayer->getChildren();
-    auto pTmpl = static_cast<Widget*>(_pRoot->getNode(listTemplateName));
-    for(auto& child: children){
-        if(child != pTmpl){
-            child->removeFromParent();
-        }
-    }
-
-    int i = 0;
+    pLayer->removeAllChildren();
+    auto pTmpl = static_cast<Widget*>(CSLoader::createNode(listTemplateName.c_str())->getChildByName("w_PanelSummary"));
+    pTmpl->retain();
     for(auto& values: array){
-        auto pClone = pTmpl->clone();
-        auto pNode = pClone->getChildByName("c_SummaryViewModel");
-        pLayer->addChild(pClone);
-        auto vm = _pRoot->bindInstance(factory, pNode, "c_SummaryViewModel");
+        auto pNode = static_cast<Widget*>(pTmpl->clone());
+        pLayer->addChild(pNode);
+        auto vm = _pRoot->bindInstance(factory, pNode->getChildByName("c_SummaryViewModel"), "c_SummaryViewModel");
         vm->update(values);
-        i++;
     }
-    auto pPanel = _pRoot->getNode("w_PanelTemplete");
-    if (pPanel != nullptr) {
-        pPanel->removeFromParent();
-        pLayer->refreshView();
-    }
+    pTmpl->release();
+    pLayer->refreshView();
 }
 
 
