@@ -494,7 +494,7 @@ void ViewModel::countUp(const std::string& iconName, const std::string& countNam
         pIcon->runAction(action);
     });
     auto pRepeat = Repeat::create(Sequence::create(countAction, DelayTime::create(0.02f), nullptr), count);
-    getRoot("BattleScene")->addActionQueue(pCounter, pRepeat);
+    ActionQueue::getInstance()->add(pCounter, pRepeat);
 }
 
 void ViewModel::onExit()
@@ -557,40 +557,6 @@ ViewModel* ViewModel::getChildByName(const std::string& name)
 
 void ViewModel::update(Value& value)
 {
-}
-
-void ViewModel::runNextAction()
-{
-    if(_actionQueue.size() > 0){
-        auto t = _actionQueue.front();
-        Node* pNode = std::get<0>(t);
-        auto pAction = std::get<1>(t);
-        pNode->runAction(pAction);
-        pAction->release();
-        _actionQueue.pop();
-    }
-}
-
-void ViewModel::addActionQueue(Node* pNode, FiniteTimeAction* pAction)
-{
-    auto pSeq = Sequence::createWithTwoActions(pAction, CallFunc::create([&](){ runNextAction(); }));
-    pSeq->retain();
-    _actionQueue.push(std::make_tuple(pNode, pSeq));
-}
-
-void ViewModel::addActionQueue(FiniteTimeAction* pAction)
-{
-    addActionQueue(getNode(), pAction);
-}
-
-void ViewModel::addActionQueue(Node* pNode, Vector<FiniteTimeAction*>& arrayOfActions)
-{
-    arrayOfActions.pushBack(CallFunc::create([&](){ runNextAction(); }));
-    auto pSeq = Sequence::create(arrayOfActions);
-    if(pNode){
-        pSeq->retain();
-        _actionQueue.push(std::make_tuple(pNode, pSeq));
-    }
 }
 
 void ViewModel::enable(const std::string& name)

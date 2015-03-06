@@ -32,9 +32,6 @@ public:
 protected:
     ViewModel* _pRootViewModel;
     Node* _pRootNode;
-    std::queue< std::tuple<Node* , FiniteTimeAction*> > _actionQueue;
-    virtual void runNextAction();
-    virtual void addActionQueue(Node* pNode, FiniteTimeAction * pAction);
     void showAds();
     void hideAds();
 private:
