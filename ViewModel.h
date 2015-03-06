@@ -9,6 +9,7 @@
 #include "extensions/GUI/CCScrollView/CCScrollView.h"
 #include "SupportFunctions.h"
 #include "BGMPlayer.h"
+#include "ActionQueue.h"
 #include <spine/SkeletonAnimation.h>
 
 using namespace cocos2d;
@@ -27,7 +28,6 @@ public:
         Size contentAreaSize = Size(640, 480);
         int verticalMargin = 130;
     };
-    typedef Vector<FiniteTimeAction*> Actions;
     ViewModel();
     virtual ~ViewModel();
     static const int DefaultSize;
@@ -81,10 +81,6 @@ public:
     void setName(const std::string name);
     const std::string getName() const;
     spine::SkeletonAnimation* replaceToAnimation(const std::string& nodeName, const std::string& animationName);
-    virtual void addActionQueue(Node* pNode, FiniteTimeAction* pAction);
-    virtual void addActionQueue(FiniteTimeAction* pAction);
-    virtual void addActionQueue(Node* pNode, Actions& arrayOfActions);
-    virtual void runNextAction();
 protected:
     virtual ViewModel* bindInstance(Factory<ViewModel>& factory, Node* pNode, const std::string& name, bool customEventDispatcher = true);
     virtual void removeFromParent(ViewModel*);
@@ -108,9 +104,6 @@ protected:
     Vector<ViewModel*> _children;
     ValueMap _data;
     virtual bool fixName(Node* pNode);
-    
-    std::queue< std::tuple<Node*, FiniteTimeAction*> > _actionQueue;
-    inline void actionStart(){ runNextAction(); };
     bool isRectContains(Node* pNode, const Vec2& point);
     View* pushView(const std::string& fname, Factory<ViewModel>& factory);
     void popView();

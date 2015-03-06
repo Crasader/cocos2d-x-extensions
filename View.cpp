@@ -70,24 +70,6 @@ void View::setTouchParticle()
     getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, pBackground);
 }
 
-void View::runNextAction()
-{
-    if(_actionQueue.size() > 0){
-        auto t = _actionQueue.front();
-        Node* pNode = std::get<0>(t);
-        auto pAction = std::get<1>(t);
-        pNode->runAction(pAction);
-        pAction->release();
-        _actionQueue.pop();
-    }
-}
-
-void View::addActionQueue(Node* pNode, FiniteTimeAction* pAction)
-{
-    pAction->retain();
-    _actionQueue.push(std::make_tuple(pNode, pAction));
-}
-
 void View::onExit()
 {
     Layer::onExit();
