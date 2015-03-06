@@ -245,7 +245,7 @@ void ViewModel::bind(Node* pNode, Factory<ViewModel>& factory)
     }
 }
 
-ViewModel* ViewModel::bindInstance(Factory<ViewModel>& factory, Node* pNode, const std::string& name)
+ViewModel* ViewModel::bindInstance(Factory<ViewModel>& factory, Node* pNode, const std::string& name, bool customEventDispatcher )
 {
     auto* pViewModel = factory.create(name);
     CCASSERT(pViewModel, ("factory " + name + " is not defined").c_str());
@@ -257,7 +257,9 @@ ViewModel* ViewModel::bindInstance(Factory<ViewModel>& factory, Node* pNode, con
     for(auto& pChild: children){
         pViewModel->bind(pChild, factory);
     }
-    pViewModel->observeEvent();
+    if(customEventDispatcher){
+        pViewModel->observeEvent();
+    }
     pViewModel->init();
     this->getChildren().pushBack(pViewModel);
     return pViewModel;
@@ -465,46 +467,17 @@ void ViewModel::setList(Factory<ViewModel>& factory, ValueVector* pVec, const Li
 void ViewModel::setList(const std::string& areaName, const std::string& listTemplateName, Factory<ViewModel>&factory, ValueVector& array)
 {
     auto pLayer = static_cast<cocos2d::ui::ListView*>(getNode(areaName));
-    auto& children = pLayer->getChildren();
-    auto pTmpl = static_cast<Widget*>(_pRoot->getNode(listTemplateName));
-    for(auto& child: children){
-        if(child != pTmpl){
-            child->removeFromParent();
-        }
-    }
-
-    int i = 0;
+    pLayer->removeAllChildren();
+    auto pTmpl = static_cast<Widget*>(CSLoader::createNode(listTemplateName.c_str())->getChildByName("w_PanelSummary"));
+    pTmpl->retain();
     for(auto& values: array){
-        auto pClone = pTmpl->clone();
-        auto pNode = pClone->getChildByName("c_SummaryViewModel");
-        pLayer->addChild(pClone);
-        auto vm = _pRoot->bindInstance(factory, pNode, "c_SummaryViewModel");
+        auto pNode = static_cast<Widget*>(pTmpl->clone());
+        pLayer->addChild(pNode);
+        auto vm = _pRoot->bindInstance(factory, pNode->getChildByName("c_SummaryViewModel"), "c_SummaryViewModel", false);
         vm->update(values);
-        i++;
     }
-    auto pPanel = _pRoot->getNode("w_PanelTemplete");
-    if (pPanel != nullptr) {
-        pPanel->removeFromParent();
-        pLayer->refreshView();
-    }
-}
-
-
-void ViewModel::setDetail(const std::string& templateName,
-                          ValueMap* pVmap, Factory<ViewModel>& factory, std::function<void(ViewModel*, ValueMap*)>callback)
-{
-    const std::string fname = "ui/" + templateName + "/" + templateName + ".ExportJson";
-    const std::string name = "w_Status";
-    auto pVm = _pRoot->getChildByName(name);
-    if(pVm == nullptr){
-        auto pNode = cocostudio::GUIReader::getInstance()->widgetFromJsonFile(fname.c_str());
-        pNode->setName(name);
-        pNode->setPosition(Vec2(400, 0));
-        pNode->getChildByName("TargetStatus")->setName("w_TargetStatus");
-        pVm = _pRoot->bindInstance(factory, pNode, "detail");
-        _pNode->getParent()->addChild(pNode);
-    }
-    callback(pVm, pVmap);
+    pTmpl->release();
+    pLayer->refreshView();
 }
 
 void ViewModel::countUp(const std::string& iconName, const std::string& countName, const int count)
