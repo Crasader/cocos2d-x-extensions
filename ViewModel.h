@@ -86,7 +86,7 @@ public:
     virtual void addActionQueue(Node* pNode, Actions& arrayOfActions);
     virtual void runNextAction();
 protected:
-    virtual ViewModel* bindInstance(Factory<ViewModel>& factory, Node* pNode, const std::string& name);
+    virtual ViewModel* bindInstance(Factory<ViewModel>& factory, Node* pNode, const std::string& name, bool customEventDispatcher = true);
     virtual void removeFromParent(ViewModel*);
     virtual void countUp(const std::string& iconName, const std::string& countName, const int count);
     void bindToggle(Factory<ViewModel>& factory, Node* pNode);

@@ -245,7 +245,7 @@ void ViewModel::bind(Node* pNode, Factory<ViewModel>& factory)
     }
 }
 
-ViewModel* ViewModel::bindInstance(Factory<ViewModel>& factory, Node* pNode, const std::string& name)
+ViewModel* ViewModel::bindInstance(Factory<ViewModel>& factory, Node* pNode, const std::string& name, bool customEventDispatcher )
 {
     auto* pViewModel = factory.create(name);
     CCASSERT(pViewModel, ("factory " + name + " is not defined").c_str());
@@ -257,7 +257,9 @@ ViewModel* ViewModel::bindInstance(Factory<ViewModel>& factory, Node* pNode, con
     for(auto& pChild: children){
         pViewModel->bind(pChild, factory);
     }
-    pViewModel->observeEvent();
+    if(customEventDispatcher){
+        pViewModel->observeEvent();
+    }
     pViewModel->init();
     this->getChildren().pushBack(pViewModel);
     return pViewModel;
@@ -469,7 +471,7 @@ void ViewModel::setList(const std::string& areaName, const std::string& listTemp
     for(auto& values: array){
         auto pNode = static_cast<Widget*>(pTmpl->clone());
         pLayer->addChild(pNode);
-        auto vm = _pRoot->bindInstance(factory, pNode->getChildByName("c_SummaryViewModel"), "c_SummaryViewModel");
+        auto vm = _pRoot->bindInstance(factory, pNode->getChildByName("c_SummaryViewModel"), "c_SummaryViewModel", false);
         vm->update(values);
     }
     pTmpl->release();
