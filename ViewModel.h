@@ -66,8 +66,6 @@ public:
     virtual void toggle(Node* pNode);
     virtual void setList(Factory<ViewModel>& factory, ValueVector* pVec, const ListConfig& config);
     virtual void setList(const std::string& areaName, const std::string& listTemplateName, Factory<ViewModel>&factory, ValueVector& array);
-    virtual void setDetail(const std::string& templalteName,
-                           ValueMap* pVmap, Factory<ViewModel>& factory, std::function<void(ViewModel*, ValueMap*)>);
     void disableTouch();
     void disableTouch(const std::string& name);
     void enableTouch();

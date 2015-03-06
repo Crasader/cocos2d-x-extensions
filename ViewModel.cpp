@@ -476,24 +476,6 @@ void ViewModel::setList(const std::string& areaName, const std::string& listTemp
     pLayer->refreshView();
 }
 
-
-void ViewModel::setDetail(const std::string& templateName,
-                          ValueMap* pVmap, Factory<ViewModel>& factory, std::function<void(ViewModel*, ValueMap*)>callback)
-{
-    const std::string fname = "ui/" + templateName + "/" + templateName + ".ExportJson";
-    const std::string name = "w_Status";
-    auto pVm = _pRoot->getChildByName(name);
-    if(pVm == nullptr){
-        auto pNode = cocostudio::GUIReader::getInstance()->widgetFromJsonFile(fname.c_str());
-        pNode->setName(name);
-        pNode->setPosition(Vec2(400, 0));
-        pNode->getChildByName("TargetStatus")->setName("w_TargetStatus");
-        pVm = _pRoot->bindInstance(factory, pNode, "detail");
-        _pNode->getParent()->addChild(pNode);
-    }
-    callback(pVm, pVmap);
-}
-
 void ViewModel::countUp(const std::string& iconName, const std::string& countName, const int count)
 {
     auto pIcon    = getNode(iconName);
