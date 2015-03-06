@@ -16,3 +16,9 @@ void BGMPlayer::play(const std::string& path)
     _currentAudioId = AudioEngine::play2d(path, true, 1.0f);
     _currentMusic = path;
 }
+
+void BGMPlayer::volume(const int percent)
+{
+    float volume = static_cast<float>(percent) / 100;
+    AudioEngine::setVolume(_currentAudioId, volume);
+}

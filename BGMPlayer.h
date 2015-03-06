@@ -10,6 +10,7 @@ class BGMPlayer
 {
 public:
     static void play(const std::string& path);
+    static void volume(const int percent);
 private:
     static std::string _currentMusic;
     static int _currentAudioId;

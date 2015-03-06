@@ -43,7 +43,7 @@ bool View::initWithFactory(const std::string fname, Factory<ViewModel>& factory)
     _pRootViewModel->bind(_pRootNode, factory);
     _pRootViewModel->init();
     addChild(_pRootNode);
-    setTouchParticle();
+//    setTouchParticle();
 //    this->schedule(schedule_selector(View::update));
     return true;
 }
