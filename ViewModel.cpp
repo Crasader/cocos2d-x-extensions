@@ -283,7 +283,7 @@ void ViewModel::bindToggle(Factory<ViewModel>& factory, Node* pNode)
     auto pWidget = static_cast<Widget*>(pNode);
     pWidget->addTouchEventListener([&](Ref* pRef, Widget::TouchEventType type){
         if(type == Widget::TouchEventType::BEGAN){
-            AudioEngine::play2d("sound/se_button_push_01.mp3");
+            BGMPlayer::play2d("sound/se_button_push_01.mp3");
             auto pNode = static_cast<Node*>(pRef);
             auto name = pNode->getName().substr(2, -1);
             auto pTarget = getNode(name);
@@ -320,7 +320,7 @@ void ViewModel::bindLink(Factory<ViewModel>& factory, Node* pNode)
     pWidget->addTouchEventListener([&](Ref* pRef, Widget::TouchEventType type){
         if(type == Widget::TouchEventType::BEGAN){
             disableTouch();
-            AudioEngine::play2d("sound/se_button_push_01.mp3");
+            BGMPlayer::play2d("sound/se_button_push_01.mp3");
             auto pNode = static_cast<Node*>(pRef);
             auto prefix = pNode->getName().substr(0, 2);
             auto name = pNode->getName().substr(2, -1);
