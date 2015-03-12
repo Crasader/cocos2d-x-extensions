@@ -201,9 +201,9 @@ void ViewModel::bind(Node* pNode, Factory<ViewModel>& factory)
         if(prefix == ViewModel::LabelPrefix){
             auto pText = static_cast<Text*>(pNode);
             if(pText->getType() == Text::Type::TTF){
-                auto color = pText->getColor();
+//                auto color = pText->getColor();
                 pText->enableShadow();
-                pText->setTextColor(Color4B(color.r, color.g, color.b, 255));
+//                pText->setTextColor(Color4B(color.r, color.g, color.b, 255));
             }
         }
         
@@ -301,7 +301,6 @@ void ViewModel::bindLink(Factory<ViewModel>& factory, Node* pNode)
     auto name = pNode->getName();
     if (name == "l_CostumeRoomScene" || name == "g_SummonRoomScene" ||
         name == "l_MyRoomScene" || name == "l_WorkScene") {
-        auto scale = ScaleBy::create(0.8f, 1.15f);
         auto wait  = DelayTime::create(0.8f);
         auto brightOn  = CallFuncN::create([](Node* pNode){
             static_cast<Button*>(pNode)->setBrightStyle(BrightStyle::HIGHLIGHT);
@@ -311,8 +310,7 @@ void ViewModel::bindLink(Factory<ViewModel>& factory, Node* pNode)
         });
         action = Repeat::create(
              Sequence::create(wait, wait, brightOn, wait, wait,
-                              brightOff, wait, scale, scale->reverse(),
-                              scale, scale->reverse(), nullptr), -1);
+                              brightOff, wait, nullptr), -1);
     }
     pNode->stopAllActions();
     pNode->setScale(1.0f);
