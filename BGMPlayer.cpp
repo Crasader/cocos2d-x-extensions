@@ -35,7 +35,7 @@ void BGMPlayer::stopAll()
     AudioEngine::stopAll();
 }
 
-const int BGMPlayer::getVolume()
+const float BGMPlayer::getVolume()
 {
     return BGMPlayer::_volume;
 }

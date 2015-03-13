@@ -12,7 +12,7 @@ public:
     static void play(const std::string& path);
     static void play2d(const std::string& path);
     static void volume(const int percent);
-    static const int getVolume();
+    static const float getVolume();
     static void stopAll();
 
 private:
