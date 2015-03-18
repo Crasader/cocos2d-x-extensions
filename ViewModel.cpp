@@ -664,18 +664,44 @@ void ViewModel::toggle(Node* pNode)
 
 View* ViewModel::pushView(const std::string& name, Factory<ViewModel>& factory)
 {
+    auto runningScene = Director::getInstance()->getRunningScene();
+    std::vector<Node*> nodes;
+    auto& children = runningScene->getChildren();
+    nodes.push_back(children.back());
+    for(auto i = 0; i < nodes.size(); i++){
+        auto& node = nodes.at(i);
+        node->pause();
+        auto& children = node->getChildren();
+        for(auto& c: children){
+            nodes.push_back(c);
+        }
+    }
+    
     auto view = View::create();
     view->initWithFactory(name, factory);
     view->setName(name);
-    Director::getInstance()->getRunningScene()->addChild(view);
+    runningScene->addChild(view);
     return view;
 }
 
 void ViewModel::popView()
 {
-    auto& children = Director::getInstance()->getRunningScene()->getChildren();
+    auto* runningScene = Director::getInstance()->getRunningScene();
+    auto& children = runningScene->getChildren();
     auto* view = static_cast<View*>(children.back());
     view->removeFromParent();
+    
+    std::vector<Node*> nodes;
+    nodes.push_back(children.back());
+    for(auto i = 0; i < nodes.size(); i++){
+        auto& node = nodes.at(i);
+        node->resume();
+        auto& children = node->getChildren();
+        for(auto& c: children){
+            nodes.push_back(c);
+        }
+    }
+
 }
 
 ViewModel* ViewModel::getRoot(const std::string& name)
