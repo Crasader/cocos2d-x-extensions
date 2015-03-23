@@ -36,6 +36,7 @@ void ActionQueue::run()
     if(_queue.size() > 0){
         auto t = _queue.front();
         Node* pNode = std::get<0>(t);
+        pNode->resume();
         auto pAction = std::get<1>(t);
         pNode->runAction(pAction);
         pAction->release();
