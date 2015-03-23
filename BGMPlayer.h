@@ -11,14 +11,14 @@ class BGMPlayer
 public:
     static void play(const std::string& path);
     static void play2d(const std::string& path);
-    static void volume(const int percent);
+    static void setVolume(const int volume);
     static const float getVolume();
     static void stopAll();
 
 private:
     static std::string _currentMusic;
     static int _currentAudioId;
-    static float _volume;
+    static int _volume;
 };
 
 #endif /* defined(__okeya__BGMPlayer__) */

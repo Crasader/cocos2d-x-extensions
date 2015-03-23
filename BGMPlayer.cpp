@@ -2,7 +2,7 @@
 
 std::string BGMPlayer::_currentMusic = "";
 int BGMPlayer::_currentAudioId = -1;
-float BGMPlayer::_volume = 1.0f;
+int BGMPlayer::_volume = 100;
 
 using namespace experimental;
 
@@ -14,19 +14,21 @@ void BGMPlayer::play(const std::string& path)
     if(_currentMusic.size() > 0 && _currentMusic != path){
         AudioEngine::stop(_currentAudioId);
     }
-    _currentAudioId = AudioEngine::play2d(path, true, BGMPlayer::_volume);
+    float rate = static_cast<float>(BGMPlayer::_volume) / 100;
+    _currentAudioId = AudioEngine::play2d(path, true, rate);
     _currentMusic = path;
 }
 
 void BGMPlayer::play2d(const std::string& path)
 {
-    AudioEngine::play2d(path, false, BGMPlayer::_volume);
+    float rate = static_cast<float>(BGMPlayer::_volume) / 100;
+    AudioEngine::play2d(path, false, rate);
 }
 
-void BGMPlayer::volume(const int percent)
+void BGMPlayer::setVolume(const int volume)
 {
-    float volume = static_cast<float>(percent) / 100;
-    AudioEngine::setVolume(_currentAudioId, volume);
+    float rate = static_cast<float>(volume) / 100;
+    AudioEngine::setVolume(_currentAudioId, rate);
     BGMPlayer::_volume = volume;
 }
 
