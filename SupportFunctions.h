@@ -8,6 +8,7 @@ namespace supportfunctions{
     int bit(const int num);
     std::string to_string(int i);
     std::vector<std::string> splitLines(const std::string& str, const int rows);
+    std::string strftime(const int timestamp, const char* format);
 }
 
 #endif /* defined(__okeya__SupportFunctions__) */

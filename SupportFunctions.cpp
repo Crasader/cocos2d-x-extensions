@@ -34,4 +34,14 @@ namespace supportfunctions {
         lines.push_back(chunk);
         return std::move(lines);
     }
+
+    std::string strftime(const int timestamp, const char* format)
+    {
+        time_t time = timestamp;
+        struct tm * ptm = localtime(&time);
+        size_t length = strlen(format) * 4;
+        char buf[length];
+        strftime(buf, length, format,  ptm);
+        return buf;
+    }
 }
