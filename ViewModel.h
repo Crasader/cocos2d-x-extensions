@@ -21,6 +21,7 @@ class View;
 class ViewModel : public Ref
 {
 public:
+    enum Status { POPVIEW = 0 };
     struct ListConfig{
         std::string listTemplate = "PanelSummary";
         Vec2 origin = Vec2(170, 400);
@@ -51,6 +52,7 @@ public:
     void appendNode(Node* pNode);
     virtual void bind(Node* children, Factory<ViewModel>& factory);
     virtual void update(Value& value);
+    virtual void refresh(const int status);
     virtual void set(const std::string& name, const std::string& value);
     virtual void set(const std::string& name, const int value);
     virtual int get(const std::string& name);
