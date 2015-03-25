@@ -662,6 +662,10 @@ void ViewModel::toggle(Node* pNode)
 
 }
 
+void ViewModel::refresh(const int status)
+{
+}
+
 View* ViewModel::pushView(const std::string& name, Factory<ViewModel>& factory)
 {
     auto runningScene = Director::getInstance()->getRunningScene();
@@ -692,7 +696,8 @@ void ViewModel::popView()
     view->removeFromParent();
     
     std::vector<Node*> nodes;
-    nodes.push_back(children.back());
+    auto* node = children.back();
+    nodes.push_back(node);
     for(auto i = 0; i < nodes.size(); i++){
         auto& node = nodes.at(i);
         node->resume();
@@ -701,7 +706,7 @@ void ViewModel::popView()
             nodes.push_back(c);
         }
     }
-
+    static_cast<View*>(node)->getRootViewModel()->refresh(ViewModel::Status::POPVIEW);
 }
 
 ViewModel* ViewModel::getRoot(const std::string& name)
