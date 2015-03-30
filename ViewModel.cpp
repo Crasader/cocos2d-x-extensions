@@ -483,7 +483,7 @@ void ViewModel::countUp(const std::string& iconName, const std::string& countNam
     auto pIcon    = getNode(iconName);
     auto pCounter = getNode(countName);
     auto iconAction = CallFunc::create([&, pIcon](){
-        auto scale = ScaleBy::create(0.4f, 1.4f);
+        auto scale = ScaleBy::create(0.3f, 1.4f);
         auto action = Sequence::create(scale, scale->reverse(), scale, scale->reverse(), nullptr);
         pIcon->runAction(action);
     });
