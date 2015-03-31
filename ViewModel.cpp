@@ -296,11 +296,10 @@ void ViewModel::bindToggle(Factory<ViewModel>& factory, Node* pNode)
 void ViewModel::bindLink(Factory<ViewModel>& factory, Node* pNode)
 {
     auto pWidget = static_cast<Widget*>(pNode);
-    auto scale = ScaleBy::create(0.8f, 1.15f);
+    auto scale = ScaleBy::create(0.8f, 1.08f);
     auto action = Repeat::create(Sequence::create(scale, scale->reverse(), nullptr), -1);
     auto name = pNode->getName();
-    if (name == "l_CostumeRoomScene" || name == "g_SummonRoomScene" ||
-        name == "l_MyRoomScene" || name == "l_WorkScene") {
+    if (name == "l_CostumeRoomScene" || name == "g_SummonRoomScene" || name == "l_MyRoomScene") {
         auto wait  = DelayTime::create(0.8f);
         auto brightOn  = CallFuncN::create([](Node* pNode){
             static_cast<Button*>(pNode)->setBrightStyle(BrightStyle::HIGHLIGHT);
