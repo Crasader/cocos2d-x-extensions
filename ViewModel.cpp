@@ -695,7 +695,7 @@ void ViewModel::popView()
     view->removeFromParent();
     
     std::vector<Node*> nodes;
-    auto* node = children.back();
+    auto* node = runningScene->getChildren().back();
     nodes.push_back(node);
     for(auto i = 0; i < nodes.size(); i++){
         auto& node = nodes.at(i);
