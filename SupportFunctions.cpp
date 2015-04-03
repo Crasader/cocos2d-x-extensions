@@ -32,7 +32,7 @@ namespace supportfunctions {
         }
         chunk += std::string(str, current, str.size() - current);
         lines.push_back(chunk);
-        return std::move(lines);
+        return lines;
     }
 
     std::string strftime(const int timestamp, const char* format)
