@@ -31,6 +31,12 @@ void ActionQueue::add(Node* pNode, Actions& arrayOfActions)
     }
 }
 
+
+void ActionQueue::add(std::tuple<Node*, FiniteTimeAction*> tuple)
+{
+    _queue.push(tuple);
+}
+
 void ActionQueue::run()
 {
     if(_queue.size() > 0){
@@ -42,4 +48,32 @@ void ActionQueue::run()
         pAction->release();
         _queue.pop();
     }
+}
+
+void ActionQueue::add(Node* pNode, ActionThread& thread)
+{
+    auto& last = thread.back();
+    thread.pop_back();
+    auto n = std::get<0>(last);
+    auto a = std::get<1>(last);
+    n->release();
+    a->release();
+    thread.add(n, Sequence::create(a, CallFunc::create([&](){ run(); }), nullptr));
+
+    add(pNode, CallFunc::create([&, thread](){
+        for(auto& exp: thread){
+            auto& node = std::get<0>(exp);
+            auto& action = std::get<1>(exp);
+            node->runAction(action);
+            action->release();
+            node->release();
+        }
+    }));
+}
+
+void ActionThread::add(Node* pNode, FiniteTimeAction* pAction)
+{
+    pNode->retain();
+    pAction->retain();
+    push_back(std::make_tuple(pNode, pAction));
 }
