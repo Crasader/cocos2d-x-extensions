@@ -696,6 +696,9 @@ void ViewModel::popView()
     
     std::vector<Node*> nodes;
     auto* node = runningScene->getChildren().back();
+    if(node->getName() == ""){
+        return;
+    }
     nodes.push_back(node);
     for(auto i = 0; i < nodes.size(); i++){
         auto& node = nodes.at(i);
