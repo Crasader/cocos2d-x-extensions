@@ -13,7 +13,7 @@ public:
     typedef typename UTF8<>::Ch Ch;
     typedef typename cocos2d::Value Value;
     
-    ValueMapWriter(Value* v) : _keyStack{}, _containerStack({v}), _nestLevel(0) {};
+    ValueMapWriter(Value* v) : _keyStack{{}}, _containerStack({v}), _nestLevel(0) {};
     ~ValueMapWriter(){};
     
 	ValueMapWriter& Null(){
@@ -49,7 +49,7 @@ public:
         }
 
         if(_keyStack.size() < _nestLevel){
-            _keyStack.push(str);
+            _keyStack.push(std::string(str));
         }else{
             insertValue(str);
         }
@@ -154,7 +154,7 @@ public:
         }
     }
 
-    std::stack<const Ch*> _keyStack;
+    std::stack<const std::string> _keyStack;
     std::stack<Value*> _containerStack;
     int _nestLevel;
 };
