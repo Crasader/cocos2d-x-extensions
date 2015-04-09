@@ -61,8 +61,8 @@ public:
             return *this;
         }
 
-        ValueMap* pVmap = new ValueMap();
-        Value* pV = new Value(*pVmap);
+        ValueMap pVmap;
+        Value* pV = new Value(std::move(pVmap));
         _containerStack.push(pV);
         _nestLevel ++;
 		return *this;
@@ -78,8 +78,8 @@ public:
 	}
     
 	ValueMapWriter& StartArray() {
-        ValueVector* pVvec = new ValueVector();
-        Value* pV = new Value(*pVvec);
+        ValueVector pVvec;
+        Value* pV = new Value(std::move(pVvec));
         _containerStack.push(pV);
 		return *this;
 	}
