@@ -473,6 +473,9 @@ void ViewModel::setList(const std::string& areaName, const std::string& listTemp
         auto vm = _pRoot->bindInstance(factory, pNode->getChildByName("c_SummaryViewModel"), "c_SummaryViewModel", false);
         vm->update(values);
     }
+    auto blank = pTmpl->clone();
+    blank->removeAllChildren();
+    pLayer->addChild(blank);
     pTmpl->release();
     pLayer->refreshView();
 }
