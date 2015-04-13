@@ -670,12 +670,17 @@ void ViewModel::refresh(const int status)
 
 View* ViewModel::pushView(const std::string& name, Factory<ViewModel>& factory)
 {
+    auto ignoreNodeName = "PlayerStatus";
     auto runningScene = Director::getInstance()->getRunningScene();
     std::vector<Node*> nodes;
     auto& children = runningScene->getChildren();
     nodes.push_back(children.back());
     for(auto i = 0; i < nodes.size(); i++){
         auto& node = nodes.at(i);
+        log("pushView %s", node->getName().c_str());
+        if(node->getName() == ignoreNodeName){
+            continue;
+        }
         node->pause();
         auto& children = node->getChildren();
         for(auto& c: children){
