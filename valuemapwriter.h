@@ -13,8 +13,11 @@ public:
     typedef typename UTF8<>::Ch Ch;
     typedef typename cocos2d::Value Value;
     
-    ValueMapWriter(Value* v) : _keyStack{{}}, _containerStack({v}), _nestLevel(0) {};
-    ~ValueMapWriter(){};
+    ValueMapWriter(Value& v) : _keyStack{{}}, _containerStack({&v}), _nestLevel(0) {};
+    ~ValueMapWriter(){
+        _nestLevel = 0;
+        _containerStack.pop();
+    };
     
 	ValueMapWriter& Null(){
         insertValue(nullptr);
