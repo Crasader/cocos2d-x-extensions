@@ -461,7 +461,7 @@ void ViewModel::setList(Factory<ViewModel>& factory, ValueVector* pVec, const Li
     }
 }
 
-void ViewModel::setList(const std::string& areaName, const std::string& listTemplateName, Factory<ViewModel>&factory, ValueVector& array)
+void ViewModel::setList(const std::string& areaName, const std::string& listTemplateName, Factory<ViewModel>&factory, ValueVector& array, bool hasBlank)
 {
     auto pLayer = static_cast<cocos2d::ui::ListView*>(getNode(areaName));
     pLayer->removeAllChildren();
@@ -473,9 +473,11 @@ void ViewModel::setList(const std::string& areaName, const std::string& listTemp
         auto vm = _pRoot->bindInstance(factory, pNode->getChildByName("c_SummaryViewModel"), "c_SummaryViewModel", false);
         vm->update(values);
     }
-    auto blank = pTmpl->clone();
-    blank->removeAllChildren();
-    pLayer->addChild(blank);
+    if(hasBlank){
+        auto blank = pTmpl->clone();
+        blank->removeAllChildren();
+        pLayer->addChild(blank);
+    }
     pTmpl->release();
     pLayer->refreshView();
 }
