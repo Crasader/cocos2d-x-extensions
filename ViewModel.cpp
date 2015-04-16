@@ -673,9 +673,9 @@ void ViewModel::refresh(const int status)
 View* ViewModel::pushView(const std::string& name, Factory<ViewModel>& factory)
 {
     auto ignoreNodeName = "PlayerStatus";
-    auto rootNode = getNode()->getScene();
+    auto scene = getNode()->getScene();
     std::vector<Node*> nodes;
-    auto& children = rootNode->getChildren();
+    auto& children = scene->getChildren();
     nodes.push_back(children.back());
     for(auto i = 0; i < nodes.size(); i++){
         auto& node = nodes.at(i);
@@ -688,23 +688,22 @@ View* ViewModel::pushView(const std::string& name, Factory<ViewModel>& factory)
             nodes.push_back(c);
         }
     }
-    
     auto view = View::create();
-    view->initWithFactory(name, factory);
     view->setName(name);
-    rootNode->addChild(view);
+    scene->addChild(view);
+    view->initWithFactory(name, factory);
     return view;
 }
 
 void ViewModel::popView()
 {
-    auto* rootNode = getNode()->getScene();
-    auto& children = rootNode->getChildren();
+    auto* scene = getNode()->getScene();
+    auto& children = scene->getChildren();
     auto* view = static_cast<View*>(children.back());
     view->removeFromParent();
     
     std::vector<Node*> nodes;
-    auto* node = rootNode->getChildren().back();
+    auto* node = scene->getChildren().back();
     if(node->getName() == ""){
         return;
     }
