@@ -670,13 +670,24 @@ void ViewModel::refresh(const int status)
 {
 }
 
-View* ViewModel::pushView(const std::string& name, Factory<ViewModel>& factory)
+Scene* ViewModel::getCurrentScene()
 {
-    auto ignoreNodeName = "PlayerStatus";
-    auto scene = getNode()->getScene();
+    Scene* scene(nullptr);
+    auto node = getNode();
+    if(node != nullptr){
+        scene = node->getScene();
+    }
     if(scene == nullptr){
         scene = Director::getInstance()->getRunningScene();
     }
+    CCASSERT(scene != nullptr, "Scene have to exists");
+    return scene;
+}
+
+View* ViewModel::pushView(const std::string& name, Factory<ViewModel>& factory)
+{
+    auto ignoreNodeName = "PlayerStatus";
+    auto scene = getCurrentScene();
     std::vector<Node*> nodes;
     auto& children = scene->getChildren();
     nodes.push_back(children.back());
@@ -700,7 +711,7 @@ View* ViewModel::pushView(const std::string& name, Factory<ViewModel>& factory)
 
 void ViewModel::popView()
 {
-    auto* scene = getNode()->getScene();
+    auto scene = getCurrentScene();
     auto& children = scene->getChildren();
     auto* view = static_cast<View*>(children.back());
     view->removeFromParent();
@@ -724,10 +735,7 @@ void ViewModel::popView()
 
 ViewModel* ViewModel::getRoot(const std::string& name)
 {
-    auto scene = getNode()->getScene();
-    if(scene == nullptr){
-        scene = Director::getInstance()->getRunningScene();
-    }
+    auto scene = getCurrentScene();
     auto& children = scene->getChildren();
     for(auto& child: children){
         if(child->getName() == name){
