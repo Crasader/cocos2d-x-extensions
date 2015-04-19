@@ -497,7 +497,13 @@ void ViewModel::countUp(const std::string& iconName, const std::string& countNam
         count ++;
         pCounter->setString(supportfunctions::to_string(count));
     });
-    auto pRepeat = Repeat::create(Sequence::create(countAction, DelayTime::create(0.02f), nullptr), count);
+    auto time = 0.02f;
+    if (count > 200) {
+        time = 0.005f;
+    } else if (count > 1000) {
+        time = 0.001f;
+    }
+    auto pRepeat = Repeat::create(Sequence::create(countAction, DelayTime::create(time), nullptr), count);
     auto spawn = Spawn::create(pRepeat, iconAction, nullptr);
     ActionQueue::getInstance()->add(pCounter, spawn);
 }
