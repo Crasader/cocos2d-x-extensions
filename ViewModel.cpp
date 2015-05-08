@@ -487,7 +487,7 @@ void ViewModel::countUp(const std::string& iconName, const std::string& countNam
     auto pIcon    = getNode(iconName);
     auto pCounter = getNode(countName);
     auto iconAction = CallFunc::create([&, pIcon](){
-        auto scale = ScaleBy::create(0.3f, 1.4f);
+        auto scale = ScaleBy::create(0.2f, 1.4f);
         auto action = Sequence::create(scale, scale->reverse(), scale, scale->reverse(), nullptr);
         pIcon->runAction(action);
     });
@@ -497,12 +497,8 @@ void ViewModel::countUp(const std::string& iconName, const std::string& countNam
         count ++;
         pCounter->setString(supportfunctions::to_string(count));
     });
-    auto time = 0.02f;
-    if (count > 200) {
-        time = 0.005f;
-    } else if (count > 1000) {
-        time = 0.001f;
-    }
+    float fulltime = 0.4f;
+    float time = fulltime / count;
     auto pRepeat = Repeat::create(Sequence::create(countAction, DelayTime::create(time), nullptr), count);
     auto spawn = Spawn::create(pRepeat, iconAction, nullptr);
     ActionQueue::getInstance()->add(pCounter, spawn);
