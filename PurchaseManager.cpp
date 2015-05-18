@@ -63,7 +63,7 @@ void PurchaseManager::buy(const std::string& IAPId, ProtocolIAP::ProtocolIAPCall
     TProductInfo info;
     
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-    info["IAPId"] = IAPId; GOOGLE
+    info["IAPId"] = IAPId;
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_IOS
     info["productId"] = IAPId;
 #endif
