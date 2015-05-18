@@ -33,6 +33,7 @@ void PurchaseManager::init()
     if(_init){
         return;
     }
+
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
     TIAPDeveloperInfo pGoogleInfo;
     pGoogleInfo["GooglePlayAppKey"] = GOOGLE_APPKEY;
@@ -44,10 +45,12 @@ void PurchaseManager::init()
     }
     s_protocolIAP = dynamic_cast<ProtocolIAP*>(PluginManager::getInstance()->loadPlugin("IAPGooglePlay"));
     s_protocolIAP->configDeveloperInfo(pGoogleInfo);
-//#ifdef COCOS2D_DEBUG
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+    TIAPDeveloperInfo info;
+    s_protocolIAP = dynamic_cast<ProtocolIAP*>(PluginManager::getInstance()->loadPlugin("IOSIAP"));
+    info["iapKeys"] = IOS_PRODUCT_KEYS;
+    s_protocolIAP->configDeveloperInfo(info);
     s_protocolIAP->setDebugMode(true);
-//#endif
-    
 #endif
     _init = true;
 }
@@ -57,15 +60,15 @@ void PurchaseManager::buy(const std::string& IAPId, ProtocolIAP::ProtocolIAPCall
     s_pRetListener->setCallback(callback);
     s_protocolIAP->setResultListener(s_pRetListener.get());
     s_protocolIAP->onPayResult(PayResultCode::kPayCancel, "Start Paying");
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
     TProductInfo info;
-    info["IAPId"] = IAPId;
-
-    s_protocolIAP->payForProduct(info);
-#else
-    log("Not implemented.");
+    
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+    info["IAPId"] = IAPId; GOOGLE
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+    info["productId"] = IAPId;
 #endif
     
+    s_protocolIAP->payForProduct(info);
 }
 
 void PurchaseManagerResult::setCallback(ProtocolIAP::ProtocolIAPCallback& callback)
@@ -76,5 +79,5 @@ void PurchaseManagerResult::setCallback(ProtocolIAP::ProtocolIAPCallback& callba
 void PurchaseManagerResult::onPayResult(PayResultCode ret, const char* msg, TProductInfo info)
 {
     std::string str(msg, strnlen(msg, 1024));
-    _callback(ret, str);
+     _callback(ret, str);
 }
