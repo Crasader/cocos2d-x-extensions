@@ -12,7 +12,7 @@ const std::string ViewModel::LabelPrefix  = "s_";
 const std::string ViewModel::SpritePrefix = "i_";
 const std::string ViewModel::ProgressPrefix = "p_";
 const std::string ViewModel::LinkPhysicsPrefix = "g_";
-const std::vector<std::string> ViewModel::ObserveSuffixes = {"Layer", "Area", "Animation"};
+const std::vector<std::string> ViewModel::ObserveSuffixes = {"Layer", "Area", "Animation", "View"};
 const std::vector<std::string> ViewModel::ObservePrefixes = {"Character"};
 
 const int ViewModel::DefaultSize = 1000;
