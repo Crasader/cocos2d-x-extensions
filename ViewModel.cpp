@@ -297,7 +297,15 @@ void ViewModel::bindLink(Factory<ViewModel>& factory, Node* pNode)
 {
     auto pWidget = static_cast<Widget*>(pNode);
     pWidget->addTouchEventListener([&](Ref* pRef, Widget::TouchEventType type){
-        if(type == Widget::TouchEventType::BEGAN){
+        if (type == Widget::TouchEventType::BEGAN) {
+            auto pNode = static_cast<Node*>(pRef);
+            pNode->setScale(1.15f);
+        }
+        if (type == Widget::TouchEventType::CANCELED) {
+            auto pNode = static_cast<Node*>(pRef);
+            pNode->setScale(1.0f);
+        }
+        if (type == Widget::TouchEventType::ENDED) {
             disableTouch();
             BGMPlayer::play2d("sound/se_button_push_01.mp3");
             auto pNode = static_cast<Node*>(pRef);
