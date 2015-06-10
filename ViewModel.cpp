@@ -296,25 +296,6 @@ void ViewModel::bindToggle(Factory<ViewModel>& factory, Node* pNode)
 void ViewModel::bindLink(Factory<ViewModel>& factory, Node* pNode)
 {
     auto pWidget = static_cast<Widget*>(pNode);
-    auto scaleA = ScaleTo::create(0.8f, 1.05f);
-    auto scaleB = ScaleTo::create(0.8f, 1.0f);
-    auto action = Repeat::create(Sequence::create(scaleA, scaleB, nullptr), -1);
-    auto name = pNode->getName();
-    if (name == "l_CostumeRoomScene" || name == "g_SummonRoomScene" || name == "l_MyRoomScene") {
-        auto wait  = DelayTime::create(0.8f);
-        auto brightOn  = CallFuncN::create([](Node* pNode){
-            static_cast<Button*>(pNode)->setBrightStyle(BrightStyle::HIGHLIGHT);
-        });
-        auto brightOff = CallFuncN::create([](Node* pNode){
-            static_cast<Button*>(pNode)->setBrightStyle(BrightStyle::NORMAL);
-        });
-        action = Repeat::create(
-             Sequence::create(wait, wait, brightOn, wait, wait,
-                              brightOff, wait, nullptr), -1);
-    }
-    pNode->stopAllActions();
-    pNode->setScale(1.0f);
-    pNode->runAction(action);
     pWidget->addTouchEventListener([&](Ref* pRef, Widget::TouchEventType type){
         if(type == Widget::TouchEventType::BEGAN){
             disableTouch();
@@ -328,7 +309,6 @@ void ViewModel::bindLink(Factory<ViewModel>& factory, Node* pNode)
             }else{
                 scene = SceneManager::getInstance()->get(name);
             }
-
             Director::getInstance()->replaceScene(scene);
         }
     });
