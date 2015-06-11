@@ -657,7 +657,7 @@ void ViewModel::toggle(Node* pNode)
 
 }
 
-void ViewModel::refresh(const int status)
+void ViewModel::refresh(const int status, const std::string& callee)
 {
 }
 
@@ -721,7 +721,7 @@ void ViewModel::popView()
             nodes.push_back(c);
         }
     }
-    static_cast<View*>(node)->getRootViewModel()->refresh(ViewModel::Status::POPVIEW);
+    static_cast<View*>(node)->getRootViewModel()->refresh(ViewModel::Status::POPVIEW, getName());
 }
 
 ViewModel* ViewModel::getRoot(const std::string& name)
