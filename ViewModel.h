@@ -52,7 +52,7 @@ public:
     void appendNode(Node* pNode);
     virtual void bind(Node* children, Factory<ViewModel>& factory);
     virtual void update(Value& value);
-    virtual void refresh(const int status);
+    virtual void refresh(const int status, const std::string& callee="");
     virtual void set(const std::string& name, const std::string& value);
     virtual void set(const std::string& name, const int value);
     virtual int get(const std::string& name);
