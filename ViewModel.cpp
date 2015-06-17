@@ -299,7 +299,7 @@ void ViewModel::bindLink(Factory<ViewModel>& factory, Node* pNode)
     pWidget->addTouchEventListener([&](Ref* pRef, Widget::TouchEventType type){
         if (type == Widget::TouchEventType::BEGAN) {
             auto pNode = static_cast<Node*>(pRef);
-            pNode->setScale(1.15f);
+            pNode->setScale(1.25f);
         }
         if (type == Widget::TouchEventType::CANCELED) {
             auto pNode = static_cast<Node*>(pRef);
@@ -476,7 +476,7 @@ void ViewModel::countUp(const std::string& iconName, const std::string& countNam
     auto pIcon    = getNode(iconName);
     auto pCounter = getNode(countName);
     auto iconAction = CallFunc::create([&, pIcon](){
-        auto scale = ScaleBy::create(0.2f, 1.4f);
+        auto scale = ScaleBy::create(0.15f, 1.4f);
         auto action = Sequence::create(scale, scale->reverse(), scale, scale->reverse(), nullptr);
         pIcon->runAction(action);
     });
