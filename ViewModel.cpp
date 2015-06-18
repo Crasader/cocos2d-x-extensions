@@ -659,7 +659,13 @@ void ViewModel::toggle(Node* pNode)
 
 void ViewModel::refresh(const int status, const std::string& callee)
 {
+    refresh(status);
 }
+
+void ViewModel::refresh(const int status)
+{
+}
+
 
 Scene* ViewModel::getCurrentScene()
 {
