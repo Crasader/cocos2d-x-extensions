@@ -17,7 +17,9 @@ const std::vector<std::string> ViewModel::ObservePrefixes = {"Character"};
 
 const int ViewModel::DefaultSize = 1000;
 
-ViewModel::ViewModel() : _pParent(nullptr)
+ViewModel::ViewModel()
+: _pParent(nullptr)
+, _moved(false)
 {
 }
 
@@ -754,4 +756,27 @@ spine::SkeletonAnimation* ViewModel::replaceToAnimation(const std::string& nodeN
     base->removeFromParent();
     _watches[nodeName] = skeletonNode;
     return skeletonNode;
+}
+
+void ViewModel::onTouch(Widget* pWidget, std::function<void (Ref* pRef)> fn)
+{
+    pWidget->addTouchEventListener([&, fn](Ref* pRef, Widget::TouchEventType type){
+        switch (type) {
+            case Widget::TouchEventType::ENDED: {
+                fn(pRef);
+                break;
+            }
+            case Widget::TouchEventType::BEGAN: {
+                _moved = false;
+            }
+            case Widget::TouchEventType::MOVED: {
+                _moved = true;
+            }
+            case Widget::TouchEventType::CANCELED: {
+                if(_moved == false){
+                    fn(pRef);
+                }
+            }
+        }
+    });
 }

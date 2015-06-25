@@ -84,6 +84,7 @@ public:
     void setName(const std::string name);
     const std::string getName() const;
     spine::SkeletonAnimation* replaceToAnimation(const std::string& nodeName, const std::string& animationName);
+    void onTouch(cocos2d::ui::Widget* pWidget, std::function<void (Ref* pRef)> fn);
 protected:
     virtual ViewModel* bindInstance(Factory<ViewModel>& factory, Node* pNode, const std::string& name, bool customEventDispatcher = true);
     virtual void removeFromParent(ViewModel*);
@@ -116,5 +117,6 @@ private:
     void setParent(ViewModel* pParent);
     void operator =(const ViewModel& src);
     ViewModel(const ViewModel& src);
+    bool _moved;
 };
 #endif /* defined(__okeya__ViewModel__) */
