@@ -8,7 +8,9 @@
 using namespace cocos2d::plugin;
 using namespace cocostudio;
 
-View::View() : _pRootViewModel(nullptr)
+View::View()
+: _pRootViewModel(nullptr)
+, _pRootNode(nullptr)
 {
 }
 
