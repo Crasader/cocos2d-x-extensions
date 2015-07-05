@@ -38,6 +38,7 @@ template<class Base>
 class Factory
 {
 public:
+    virtual ~Factory();
     Base* create(std::string type);
     Base* createWithInit(std::string type);
     bool sign(std::string type, CreatorBase<Base> * pCreator);
@@ -46,6 +47,13 @@ private:
     CreatorMap _creatorMap;
 };
 
+template<class Base>
+Factory<Base>::~Factory()
+{
+    for(auto& creator: _creatorMap){
+        delete std::get<1>(creator);
+    }
+}
 
 template<class Base>
 bool Factory<Base>::sign(std::string type, CreatorBase<Base> * pCreator)
