@@ -86,8 +86,10 @@ void ViewModel::observeEvent()
     listener->onTouchEnded = [&](Touch* pTouch, Event* pEvent){
         onTouchEnded(pTouch, pEvent);
     };
-    auto pWidget = static_cast<Widget*>(_pNode);
-    pWidget->setTouchEnabled(false);
+    auto pWidget = dynamic_cast<Widget*>(_pNode);
+    if(pWidget){
+        pWidget->setTouchEnabled(false);
+    }
     Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, _pNode);
 }
 
@@ -168,7 +170,6 @@ void ViewModel::bind(Node* pNode, Factory<ViewModel>& factory)
     if(pNode == nullptr){
         return;
     }
-        
     _pRoot->fixName(pNode);
     static const std::string instancePrefix = "c_";
     static const std::string togglePrefix = "t_";
