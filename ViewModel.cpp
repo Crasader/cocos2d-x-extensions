@@ -20,6 +20,9 @@ const int ViewModel::DefaultSize = 1000;
 ViewModel::ViewModel()
 : _pParent(nullptr)
 , _moved(false)
+, _name("")
+, _pRoot(nullptr)
+, _pNode(nullptr)
 {
 }
 
