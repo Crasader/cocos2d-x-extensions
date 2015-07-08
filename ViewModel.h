@@ -88,7 +88,7 @@ public:
 protected:
     virtual ViewModel* bindInstance(Factory<ViewModel>& factory, Node* pNode, const std::string& name, bool customEventDispatcher = true);
     virtual void removeFromParent(ViewModel*);
-    virtual void countUp(const std::string& iconName, const std::string& countName, const int count);
+    virtual FiniteTimeAction* countUp(const int count);
     void bindToggle(Factory<ViewModel>& factory, Node* pNode);
     void bindLink(Factory<ViewModel>& factory, Node* pNode);
 

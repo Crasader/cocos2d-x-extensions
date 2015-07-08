@@ -477,15 +477,8 @@ void ViewModel::setList(const std::string& areaName, const std::string& listTemp
     pLayer->refreshView();
 }
 
-void ViewModel::countUp(const std::string& iconName, const std::string& countName, const int count)
+FiniteTimeAction* ViewModel::countUp(const int count)
 {
-    auto pIcon    = getNode(iconName);
-    auto pCounter = getNode(countName);
-    auto iconAction = CallFunc::create([&, pIcon](){
-        auto scale = ScaleBy::create(0.15f, 1.4f);
-        auto action = Sequence::create(scale, scale->reverse(), scale, scale->reverse(), nullptr);
-        pIcon->runAction(action);
-    });
     auto countAction = CallFuncN::create([&](Node* pNode){
         auto pCounter = static_cast<Text*>(pNode);
         int count = std::atoi(pCounter->getString().c_str());
@@ -494,9 +487,10 @@ void ViewModel::countUp(const std::string& iconName, const std::string& countNam
     });
     float fulltime = 0.4f;
     float time = fulltime / count;
-    auto pRepeat = Repeat::create(Sequence::create(countAction, DelayTime::create(time), nullptr), count);
-    auto spawn = Spawn::create(pRepeat, iconAction, nullptr);
-    ActionQueue::getInstance()->add(pCounter, spawn);
+    auto countSeq = Sequence::create(countAction, DelayTime::create(time), nullptr);
+    auto countRepeat = Repeat::create(countSeq, count);
+
+    return countRepeat;
 }
 
 void ViewModel::onExit()
