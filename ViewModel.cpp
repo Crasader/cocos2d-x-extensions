@@ -482,6 +482,34 @@ void ViewModel::setList(const std::string& areaName, const std::string& classNam
     pLayer->refreshView();
 }
 
+void ViewModel::setTable(const std::string& areaName, const std::string& className, const std::string& listTemplateName, Factory<ViewModel>&factory, ValueVector& array)
+{
+    auto pLayer = static_cast<cocos2d::ui::ListView*>(getNode(areaName));
+    pLayer->removeAllChildren();
+    auto pTmpl = static_cast<Widget*>(CSLoader::createNode(listTemplateName.c_str())->getChildByName("w_PanelSummary"));
+    pTmpl->retain();
+    auto row = Widget::create();
+    row->setContentSize(Size(pLayer->getContentSize().width, pTmpl->getContentSize().height));
+    auto x = 0;
+    for(auto& values: array){
+        auto pNode = static_cast<Widget*>(pTmpl->clone());
+        pNode->setPositionX(x);
+        auto vm = _pRoot->bindInstance(factory, pNode->getChildByName(className), className, false);
+        vm->update(values);
+        row->addChild(pNode);
+        x += pNode->getContentSize().width;
+        if(x > pLayer->getContentSize().width){
+            pLayer->addChild(row);
+            x = 0;
+            row = Widget::create();
+            row->setContentSize(Size(pLayer->getContentSize().width, pTmpl->getContentSize().height));
+        }
+    }
+    pTmpl->release();
+    pLayer->refreshView();
+}
+
+
 FiniteTimeAction* ViewModel::countUp(const int count)
 {
     auto countAction = CallFuncN::create([&](Node* pNode){
