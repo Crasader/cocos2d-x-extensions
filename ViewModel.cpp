@@ -456,7 +456,12 @@ void ViewModel::setList(Factory<ViewModel>& factory, ValueVector* pVec, const Li
     }
 }
 
-void ViewModel::setList(const std::string& areaName, const std::string& listTemplateName, Factory<ViewModel>&factory, ValueVector& array, bool hasBlank)
+void ViewModel::setList(const std::string& listTemplateName, Factory<ViewModel>&factory, ValueVector& array, bool hasBlank)
+{
+    setList("ScrollArea", "c_SummaryViewModel", listTemplateName, factory, array);
+}
+
+void ViewModel::setList(const std::string& areaName, const std::string& className, const std::string& listTemplateName, Factory<ViewModel>&factory, ValueVector& array, bool hasBlank)
 {
     auto pLayer = static_cast<cocos2d::ui::ListView*>(getNode(areaName));
     pLayer->removeAllChildren();
@@ -465,7 +470,7 @@ void ViewModel::setList(const std::string& areaName, const std::string& listTemp
     for(auto& values: array){
         auto pNode = static_cast<Widget*>(pTmpl->clone());
         pLayer->addChild(pNode);
-        auto vm = _pRoot->bindInstance(factory, pNode->getChildByName("c_SummaryViewModel"), "c_SummaryViewModel", false);
+        auto vm = _pRoot->bindInstance(factory, pNode->getChildByName(className), className, false);
         vm->update(values);
     }
     if(hasBlank){
