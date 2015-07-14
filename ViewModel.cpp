@@ -505,6 +505,13 @@ void ViewModel::setTable(const std::string& areaName, const std::string& classNa
             row->setContentSize(Size(pLayer->getContentSize().width, pTmpl->getContentSize().height));
         }
     }
+    if(row->getChildren().size() > 0){
+        pLayer->addChild(row);
+    }
+    auto margin = Widget::create();
+    margin->setContentSize(Size(pLayer->getContentSize().width, pTmpl->getContentSize().height));
+    pLayer->addChild(margin);
+
     pTmpl->release();
     pLayer->refreshView();
 }
