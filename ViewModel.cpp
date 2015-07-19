@@ -751,11 +751,22 @@ void ViewModel::popView()
     auto scene = getCurrentScene();
     auto& children = scene->getChildren();
     auto* view = static_cast<View*>(children.back());
-    if(getNode() == view){
-        setNode(nullptr);
+    std::vector<Node*> nodes;
+    nodes.push_back(view);
+    for(auto i = 0; i < nodes.size(); i++){
+        auto& node = nodes.at(i);
+        if(node == _pNode){
+            _pNode = nullptr;
+            break;
+        }
+        auto& children = node->getChildren();
+        for(auto& c: children){
+            nodes.push_back(c);
+        }
     }
     view->removeFromParent();
-    std::vector<Node*> nodes;
+
+    nodes.clear();
     auto* node = scene->getChildren().back();
     if(node->getName() == ""){
         return;
