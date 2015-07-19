@@ -754,7 +754,7 @@ void ViewModel::popView()
     std::vector<Node*> nodes;
     nodes.push_back(view);
     for(auto i = 0; i < nodes.size(); i++){
-        auto& node = nodes.at(i);
+        auto* node = nodes.at(i);
         if(node == _pNode){
             _pNode = nullptr;
             break;
