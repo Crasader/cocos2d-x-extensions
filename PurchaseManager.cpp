@@ -8,6 +8,7 @@
 
 #include "PurchaseManager.h"
 #include "Env.h"
+#include "Naming.h"
 
 using namespace cocos2d::plugin;
 
@@ -78,6 +79,6 @@ void PurchaseManagerResult::setCallback(ProtocolIAP::ProtocolIAPCallback& callba
 
 void PurchaseManagerResult::onPayResult(PayResultCode ret, const char* msg, TProductInfo info)
 {
-    std::string str(msg, strnlen(msg, 1024));
+    std::string str(msg);
      _callback(ret, str);
 }
