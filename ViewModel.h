@@ -26,7 +26,7 @@ public:
         std::string listTemplate = "PanelSummary";
         Vec2 origin = Vec2(170, 400);
         std::string contentAreaName = "ScrollArea";
-        Size contentAreaSize = Size(640, 480);
+        cocos2d::Size contentAreaSize = cocos2d::Size(640, 480);
         int verticalMargin = 130;
     };
     ViewModel();
@@ -48,7 +48,7 @@ public:
     virtual ViewModel* getRoot(const std::string& name);
     virtual View* getView();
     void observeEvent();
-    const Rect getBoundingBox() const;
+    const cocos2d::Rect getBoundingBox() const;
     void appendNode(Node* pNode);
     virtual void bind(Node* children, Factory<ViewModel>& factory);
     virtual void update(Value& value);
@@ -106,7 +106,7 @@ protected:
     ViewModel* _pRoot;
     ViewModel* _pParent;
     Node* _pNode;
-    Rect _rect;
+    cocos2d::Rect _rect;
     Vector<ViewModel*> _children;
     ValueMap _data;
     virtual bool fixName(Node* pNode);
