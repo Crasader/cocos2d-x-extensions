@@ -8,6 +8,7 @@
 
 #include "PurchaseManager.h"
 #include "Env.h"
+#include "Naming.h"
 
 using namespace cocos2d::plugin;
 
