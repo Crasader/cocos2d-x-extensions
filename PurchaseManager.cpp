@@ -6,10 +6,11 @@
 //
 //
 
+#include "platform/CCCommon.h"
 #include "PurchaseManager.h"
 #include "Env.h"
-#include "Naming.h"
 
+using namespace cocos2d;
 using namespace cocos2d::plugin;
 
 PurchaseManager::PurchaseManager()
@@ -51,8 +52,12 @@ void PurchaseManager::init()
     s_protocolIAP = dynamic_cast<ProtocolIAP*>(PluginManager::getInstance()->loadPlugin("IOSIAP"));
     info["iapKeys"] = IOS_PRODUCT_KEYS;
     s_protocolIAP->configDeveloperInfo(info);
+#endif
+
+#if COCOS2D_DEBUG
     s_protocolIAP->setDebugMode(true);
 #endif
+    
     _init = true;
 }
 
