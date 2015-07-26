@@ -47,5 +47,7 @@ void BGMPlayer::setVolumeSE(const int volume)
 
 void BGMPlayer::stopAll()
 {
+    _currentAudioId = -1;
+    _currentMusic = "";
     AudioEngine::stopAll();
 }
