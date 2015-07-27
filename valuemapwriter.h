@@ -19,36 +19,36 @@ public:
         _containerStack.pop();
     };
     
-	ValueMapWriter& Null(){
+	bool Null(){
         insertValue(nullptr);
-        return *this;
+        return true;
     }
     
-	ValueMapWriter& Bool(bool b){
+	bool Bool(bool b){
         insertValue(b);
-        return *this;
+        return true;
     }
-	ValueMapWriter& Int(int i){
+	bool Int(int i){
         insertValue(i);
-        return *this;
+        return true;
     }
-	ValueMapWriter& Uint(unsigned u){
-        return *this;
+	bool Uint(unsigned u){
+        return true;
     }
-	ValueMapWriter& Int64(int64_t i64){
-        return *this;
+	bool Int64(int64_t i64){
+        return true;
     }
-	ValueMapWriter& Uint64(uint64_t u64){
-        return *this;
+	bool Uint64(uint64_t u64){
+        return true;
     }
-	ValueMapWriter& Double(double d){
-        return *this;
+	bool Double(double d){
+        return true;
     }
     
-	ValueMapWriter& String(const Ch* str, SizeType length, bool copy = false){
+	bool String(const Ch* str, SizeType length, bool copy = false){
         if(_containerStack.top()->getType() == Value::Type::VECTOR){
             insertValue(str);
-            return *this;
+            return true;
         }
 
         if(_keyStack.size() < _nestLevel){
@@ -56,44 +56,44 @@ public:
         }else{
             insertValue(str);
         }
-		return *this;
+		return true;
 	}
-	ValueMapWriter& StartObject(){
+	bool StartObject(){
         if(_nestLevel < 1){
             _nestLevel ++;
-            return *this;
+            return true;
         }
 
         ValueMap pVmap;
         Value* pV = new Value(std::move(pVmap));
         _containerStack.push(pV);
         _nestLevel ++;
-		return *this;
+		return true;
 	}
-	ValueMapWriter& EndObject(SizeType memberCount = 0){
+	bool EndObject(SizeType memberCount = 0){
         if(_containerStack.size() > 1){
             auto pContainer = _containerStack.top();
             _containerStack.pop();
             insertContainer(pContainer);
             _nestLevel --;
         }
-		return *this;
+		return true;
 	}
     
-	ValueMapWriter& StartArray() {
+	bool StartArray() {
         ValueVector pVvec;
         Value* pV = new Value(std::move(pVvec));
         _containerStack.push(pV);
-		return *this;
+		return true;
 	}
     
-	ValueMapWriter& EndArray(SizeType elementCount = 0) {
+	bool EndArray(SizeType elementCount = 0) {
         if(_containerStack.size() > 1){
             auto pContainer = _containerStack.top();
             _containerStack.pop();
             insertContainer(pContainer);
         }
-		return *this;
+		return true;
 	}
     
     template<typename T>
@@ -156,6 +156,7 @@ public:
             }
         }
     }
+    bool Key(const Ch* str, SizeType length, bool copy = false) { return String(str, length, copy); }
 
     std::stack<const std::string> _keyStack;
     std::stack<Value*> _containerStack;
