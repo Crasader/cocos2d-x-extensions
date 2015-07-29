@@ -456,12 +456,12 @@ void ViewModel::setList(Factory<ViewModel>& factory, ValueVector* pVec, const Li
     }
 }
 
-void ViewModel::setList(const std::string& listTemplateName, Factory<ViewModel>&factory, ValueVector& array, bool hasBlank)
+void ViewModel::setList(const std::string& listTemplateName, Factory<ViewModel>&factory, ValueVector& array, bool hasBlank, bool hasScrollBar)
 {
-    setList("ScrollArea", "c_SummaryViewModel", listTemplateName, factory, array);
+    setList("ScrollArea", "c_SummaryViewModel", listTemplateName, factory, array, hasBlank, hasScrollBar);
 }
 
-void ViewModel::setList(const std::string& areaName, const std::string& className, const std::string& listTemplateName, Factory<ViewModel>&factory, ValueVector& array, bool hasBlank)
+void ViewModel::setList(const std::string& areaName, const std::string& className, const std::string& listTemplateName, Factory<ViewModel>&factory, ValueVector& array, bool hasBlank, bool hasScrollBar)
 {
     auto pLayer = static_cast<cocos2d::ui::ListView*>(getNode(areaName));
     pLayer->removeAllChildren();
@@ -478,10 +478,15 @@ void ViewModel::setList(const std::string& areaName, const std::string& classNam
         blank->removeAllChildren();
         pLayer->addChild(blank);
     }
+    pLayer->setScrollBarEnabled(hasScrollBar);
     pTmpl->release();
     pLayer->refreshView();
 }
 
+void ViewModel::setTable(const std::string& listTemplateName, Factory<ViewModel>&factory, ValueVector& array)
+{
+    setTable("ScrollArea", "c_SummaryViewModel", listTemplateName, factory, array);
+}
 void ViewModel::setTable(const std::string& areaName, const std::string& className, const std::string& listTemplateName, Factory<ViewModel>&factory, ValueVector& array)
 {
     auto pLayer = static_cast<cocos2d::ui::ListView*>(getNode(areaName));
@@ -498,7 +503,7 @@ void ViewModel::setTable(const std::string& areaName, const std::string& classNa
         vm->update(values);
         row->addChild(pNode);
         x += pNode->getContentSize().width;
-        if(x > pLayer->getContentSize().width){
+        if(x >= pLayer->getContentSize().width){
             pLayer->addChild(row);
             x = 0;
             row = Widget::create();
