@@ -5,7 +5,6 @@
 #include "editor-support/cocostudio/CocoStudio.h"
 
 using namespace experimental;
-using namespace extension;
 using namespace cocos2d::ui;
 
 const std::string ViewModel::LabelPrefix  = "s_";
@@ -478,7 +477,11 @@ void ViewModel::setList(const std::string& areaName, const std::string& classNam
         blank->removeAllChildren();
         pLayer->addChild(blank);
     }
+<<<<<<< HEAD
     pLayer->setScrollBarEnabled(hasScrollBar);
+=======
+    jumpToTop(pLayer);
+>>>>>>> 41ca5bd5972667b70ecc29dbbb99b1ac19d0e530
     pTmpl->release();
     pLayer->refreshView();
 }
@@ -516,9 +519,17 @@ void ViewModel::setTable(const std::string& areaName, const std::string& classNa
     auto margin = Widget::create();
     margin->setContentSize(Size(pLayer->getContentSize().width, pTmpl->getContentSize().height));
     pLayer->addChild(margin);
-
+    jumpToTop(pLayer);
     pTmpl->release();
     pLayer->refreshView();
+}
+
+
+void ViewModel::jumpToTop(cocos2d::ui::ScrollView* pList)
+{
+    auto& children = pList->getChildren();
+    auto height = children.at(0)->getContentSize().height * children.size();
+    pList->setInnerContainerPosition(Vec2(0, -height));
 }
 
 

@@ -6,14 +6,13 @@
 #include "editor-support/cocostudio/CocoStudio.h"
 #include "editor-support/cocostudio/CCArmature.h"
 #include "ui/UIText.h"
-#include "extensions/GUI/CCScrollView/CCScrollView.h"
+#include "ui/UIScrollView.h"
 #include "SupportFunctions.h"
 #include "BGMPlayer.h"
 #include "ActionQueue.h"
 #include <spine/SkeletonAnimation.h>
 
 using namespace cocos2d;
-using namespace cocos2d::extension;
 using namespace cocostudio;
 
 class View;
@@ -72,6 +71,7 @@ public:
     virtual void setList(const std::string& areaName, const std::string& className, const std::string& listTemplateName, Factory<ViewModel>&factory, ValueVector& array, bool hasBlank = true, bool hasScrollBar = true);
     virtual void setTable(const std::string& listTemplateName, Factory<ViewModel>&factory, ValueVector& array);
     virtual void setTable(const std::string& areaName, const std::string& className, const std::string& listTemplateName, Factory<ViewModel>&factory, ValueVector& array);
+    void jumpToTop(cocos2d::ui::ScrollView* pList);
     void disableTouch();
     void disableTouch(const std::string& name);
     void enableTouch();
