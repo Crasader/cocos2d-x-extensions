@@ -398,17 +398,20 @@ void ViewModel::set(const std::string& name, const std::string& value){
         auto charCount = StringUtils::getCharacterCountInUTF8String(value);
         int perLineCount = 20;
         if(charCount > perLineCount){
-            pText->setString("a");
-            int lineHeight = pText->getContentSize().height;
+            int lineCount = 0;
+            int lineHeight = pText->getFontSize() + 4;
             pText->setString(value);
             std::istringstream stream(value);
             std::string buf;
-            int lineCount = 0;
             while(std::getline(stream, buf)){
                 lineCount ++;
+                lineCount += StringUtils::getCharacterCountInUTF8String(buf) / 20;
             }
-            auto h = lineCount + (charCount / perLineCount);
-            pText->setContentSize(Size(pText->getContentSize().width, h * lineHeight));
+            auto height = lineCount * lineHeight;
+            auto& size = pText->getContentSize();
+            if(size.height < height){
+                pText->setContentSize(Size(size.width, height));
+            }
         }
     }else if(prefix == ViewModel::ProgressPrefix){
         static_cast<LoadingBar*>(pNode)->setPercent(std::stoi(value));
