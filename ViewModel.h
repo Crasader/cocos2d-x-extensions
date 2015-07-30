@@ -11,6 +11,8 @@
 #include "BGMPlayer.h"
 #include "ActionQueue.h"
 #include <spine/SkeletonAnimation.h>
+#include <string>
+#include <iostream>
 
 using namespace cocos2d;
 using namespace cocostudio;

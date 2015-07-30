@@ -170,6 +170,10 @@ void ViewModel::bind(Node* pNode, Factory<ViewModel>& factory)
         return;
     }
     _pRoot->fixName(pNode);
+    auto description =  pNode->getDescription();
+    if(description == "ListView" || description == "ScrollView"){
+        jumpToTop(static_cast<ScrollView*>(pNode));
+    }
     static const std::string instancePrefix = "c_";
     static const std::string togglePrefix = "t_";
     static const std::string linkPrefix = "l_";
@@ -391,6 +395,21 @@ void ViewModel::set(const std::string& name, const std::string& value){
     }else if(prefix == ViewModel::LabelPrefix){
         auto pText = static_cast<Text*>(pNode);
         pText->setString(value);
+        auto charCount = StringUtils::getCharacterCountInUTF8String(value);
+        int perLineCount = 20;
+        if(charCount > perLineCount){
+            pText->setString("a");
+            int lineHeight = pText->getContentSize().height;
+            pText->setString(value);
+            std::istringstream stream(value);
+            std::string buf;
+            int lineCount = 0;
+            while(std::getline(stream, buf)){
+                lineCount ++;
+            }
+            auto h = lineCount + (charCount / perLineCount);
+            pText->setContentSize(Size(pText->getContentSize().width, h * lineHeight));
+        }
     }else if(prefix == ViewModel::ProgressPrefix){
         static_cast<LoadingBar*>(pNode)->setPercent(std::stoi(value));
     }else{
@@ -525,6 +544,9 @@ void ViewModel::setTable(const std::string& areaName, const std::string& classNa
 void ViewModel::jumpToTop(cocos2d::ui::ScrollView* pList)
 {
     auto& children = pList->getChildren();
+    if(children.empty()){
+        return;
+    }
     auto height = children.at(0)->getContentSize().height * children.size();
     pList->setInnerContainerPosition(Vec2(0, -height));
 }
