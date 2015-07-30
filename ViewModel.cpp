@@ -477,11 +477,8 @@ void ViewModel::setList(const std::string& areaName, const std::string& classNam
         blank->removeAllChildren();
         pLayer->addChild(blank);
     }
-<<<<<<< HEAD
     pLayer->setScrollBarEnabled(hasScrollBar);
-=======
     jumpToTop(pLayer);
->>>>>>> 41ca5bd5972667b70ecc29dbbb99b1ac19d0e530
     pTmpl->release();
     pLayer->refreshView();
 }
