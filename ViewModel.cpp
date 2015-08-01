@@ -395,24 +395,6 @@ void ViewModel::set(const std::string& name, const std::string& value){
     }else if(prefix == ViewModel::LabelPrefix){
         auto pText = static_cast<Text*>(pNode);
         pText->setString(value);
-        auto charCount = StringUtils::getCharacterCountInUTF8String(value);
-        int perLineCount = 20;
-        if(charCount > perLineCount){
-            int lineCount = 0;
-            int lineHeight = pText->getFontSize() + 4;
-            pText->setString(value);
-            std::istringstream stream(value);
-            std::string buf;
-            while(std::getline(stream, buf)){
-                lineCount ++;
-                lineCount += StringUtils::getCharacterCountInUTF8String(buf) / 20;
-            }
-            auto height = lineCount * lineHeight;
-            auto& size = pText->getContentSize();
-            if(size.height < height){
-                pText->setContentSize(Size(size.width, height));
-            }
-        }
     }else if(prefix == ViewModel::ProgressPrefix){
         static_cast<LoadingBar*>(pNode)->setPercent(std::stoi(value));
     }else{
