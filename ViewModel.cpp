@@ -185,6 +185,15 @@ void ViewModel::bind(Node* pNode, Factory<ViewModel>& factory)
     const std::string parentName = pNode->getName();
 
     auto const name = pNode->getName();
+    const auto desc = pNode->getDescription();
+    if(desc == "ListView" || desc == "ScrollView"){
+        auto height = 0;
+        auto& children = pNode->getChildren();
+        for(auto& child: children){
+            height += child->getContentSize().height;
+        }
+        static_cast<ScrollView*>(pNode)->setInnerContainerPosition(Vec2(0, -height));
+    }
 //    log("%s, %x", name.c_str(), pNode->isVisible());
     auto prefix = name.substr(0, 2);
     if(prefix == instancePrefix){
