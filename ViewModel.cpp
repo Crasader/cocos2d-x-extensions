@@ -777,7 +777,7 @@ View* ViewModel::pushView(const std::string& name, Factory<ViewModel>& factory)
 
 void ViewModel::popView()
 {
-    auto scene = getCurrentScene();
+    auto scene = Director::getInstance()->getRunningScene();
     auto& children = scene->getChildren();
     auto* view = static_cast<View*>(children.back());
     std::vector<Node*> nodes;
