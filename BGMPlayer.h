@@ -10,7 +10,8 @@ class BGMPlayer
 {
 public:
     static void play(const std::string& path);
-    static void play2d(const std::string& path);
+    static int play2d(const std::string& path);
+    static void play2du(const std::string& path);
     static void setVolume(const int volume);
     static void setVolumeSE(const int volume);
     inline static void setMute(bool b){ BGMPlayer::_mute = b; }
@@ -24,6 +25,7 @@ private:
     static int _volume;
     static int _volumeSE;
     static bool _mute;
+    static std::string _prevSE;
 };
 
 #endif /* defined(__okeya__BGMPlayer__) */

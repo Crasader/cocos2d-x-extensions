@@ -1,6 +1,7 @@
 #include "BGMPlayer.h"
 
 std::string BGMPlayer::_currentMusic = "";
+std::string BGMPlayer::_prevSE = "";
 int BGMPlayer::_currentAudioId = -1;
 int BGMPlayer::_volume = 100;
 int BGMPlayer::_volumeSE = 100;
@@ -24,13 +25,25 @@ void BGMPlayer::play(const std::string& path)
     _currentMusic = path;
 }
 
-void BGMPlayer::play2d(const std::string& path)
+int BGMPlayer::play2d(const std::string& path)
 {
     if(_mute){
-        return;
+        return 0;
     }
     float rate = static_cast<float>(BGMPlayer::_volumeSE) / 100;
-    AudioEngine::play2d(path, false, rate);
+    return AudioEngine::play2d(path, false, rate);
+}
+
+void BGMPlayer::play2du(const std::string& path)
+{
+    if(_prevSE == path){
+        return;
+    }
+    _prevSE = path;
+    auto audioId = play2d(path);
+    AudioEngine::setFinishCallback(audioId, [](int, const std::string &){
+        BGMPlayer::_prevSE = "";
+    });
 }
 
 void BGMPlayer::setVolume(const int volume)
