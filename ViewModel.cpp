@@ -735,25 +735,10 @@ void ViewModel::refresh(const int status)
 {
 }
 
-
-Scene* ViewModel::getCurrentScene()
-{
-    Scene* scene(nullptr);
-    auto node = getNode();
-    if(node != nullptr){
-        scene = node->getScene();
-    }
-    if(scene == nullptr){
-        scene = Director::getInstance()->getRunningScene();
-    }
-    CCASSERT(scene != nullptr, "Scene have to exists");
-    return scene;
-}
-
 View* ViewModel::pushView(const std::string& name, Factory<ViewModel>& factory)
 {
     auto ignoreNodeName = "PlayerStatus";
-    auto scene = getCurrentScene();
+    auto scene = Director::getInstance()->getRunningScene();
     std::vector<Node*> nodes;
     auto& children = scene->getChildren();
     nodes.push_back(children.back());
@@ -814,7 +799,7 @@ void ViewModel::popView()
 
 ViewModel* ViewModel::getRoot(const std::string& name)
 {
-    auto scene = getCurrentScene();
+    auto scene = Director::getInstance()->getRunningScene();
     auto& children = scene->getChildren();
     for(auto& child: children){
         if(child->getName() == name){

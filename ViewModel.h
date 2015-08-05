@@ -116,7 +116,6 @@ protected:
     bool isRectContains(Node* pNode, const Vec2& point);
     View* pushView(const std::string& fname, Factory<ViewModel>& factory);
     void popView();
-    Scene* getCurrentScene();
     
 private:
     void setParent(ViewModel* pParent);
