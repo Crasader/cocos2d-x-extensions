@@ -18,6 +18,7 @@ namespace supportfunctions{
 
     std::vector<std::string> splitLines(const std::string& str, const int rows);
     std::string strftime(const int timestamp, const char* format);
+    bool isOpening(long int now, long int open, long int close);
 }
 
 #endif /* defined(__okeya__SupportFunctions__) */

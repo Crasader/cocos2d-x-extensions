@@ -44,4 +44,12 @@ namespace supportfunctions {
         strftime(buf, length, format,  ptm);
         return buf;
     }
+    bool isOpening(long int now, long int open, long int close)
+    {
+        if((open == 0 || open <= now) && (close == 0 || now <= close)){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
