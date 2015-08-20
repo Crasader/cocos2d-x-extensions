@@ -734,10 +734,12 @@ void ViewModel::refresh(const int status)
 {
 }
 
-View* ViewModel::pushView(const std::string& name, Factory<ViewModel>& factory)
+View* ViewModel::pushView(const std::string& name, Factory<ViewModel>& factory, Scene* scene)
 {
     auto ignoreNodeName = "PlayerStatus";
-    auto scene = Director::getInstance()->getRunningScene();
+    if(!scene){
+        scene = Director::getInstance()->getRunningScene();
+    }
     std::vector<Node*> nodes;
     auto& children = scene->getChildren();
     nodes.push_back(children.back());
@@ -797,9 +799,11 @@ void ViewModel::popView()
     static_cast<View*>(node)->getRootViewModel()->refresh(ViewModel::Status::POPVIEW, name);
 }
 
-ViewModel* ViewModel::getRoot(const std::string& name)
+ViewModel* ViewModel::getRoot(const std::string& name, Scene* scene)
 {
-    auto scene = Director::getInstance()->getRunningScene();
+    if(!scene){
+        scene = Director::getInstance()->getRunningScene();
+    }
     auto& children = scene->getChildren();
     for(auto& child: children){
         if(child->getName() == name){

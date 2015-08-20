@@ -46,7 +46,7 @@ public:
     virtual Vector<ViewModel*>& getChildren();
     virtual ViewModel* getChildByName(const std::string& name);
     virtual ViewModel* getParent();
-    virtual ViewModel* getRoot(const std::string& name);
+    virtual ViewModel* getRoot(const std::string& name, Scene* scene = nullptr);
     virtual View* getView();
     void observeEvent();
     const cocos2d::Rect getBoundingBox() const;
@@ -114,7 +114,7 @@ protected:
     ValueMap _data;
     virtual bool fixName(Node* pNode);
     bool isRectContains(Node* pNode, const Vec2& point);
-    View* pushView(const std::string& fname, Factory<ViewModel>& factory);
+    View* pushView(const std::string& fname, Factory<ViewModel>& factory, Scene* scene = nullptr);
     void popView();
     
 private:
