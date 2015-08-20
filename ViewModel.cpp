@@ -219,9 +219,8 @@ void ViewModel::bind(Node* pNode, Factory<ViewModel>& factory)
         if(prefix == ViewModel::LabelPrefix){
             auto pText = static_cast<Text*>(pNode);
             if(pText->getType() == Text::Type::TTF){
-//                auto color = pText->getColor();
-                pText->enableShadow();
-//                pText->setTextColor(Color4B(color.r, color.g, color.b, 255));
+                pText->enableShadow(Color4B::BLACK, Size(2, -2));
+//                pText->enableOutline(Color4B(68, 34, 0, 255), 1);
             }
         }
         
