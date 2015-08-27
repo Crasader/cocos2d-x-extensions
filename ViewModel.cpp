@@ -544,36 +544,6 @@ void ViewModel::jumpToTop(cocos2d::ui::ScrollView* pList)
     pList->setInnerContainerPosition(Vec2(0, -height));
 }
 
-FiniteTimeAction* ViewModel::countUpOrDown(int count, const int amount)
-{
-    auto countAction = CallFuncN::create([count, amount](Node* pNode) mutable {
-        if(count < 1){
-            return;
-        }
-        auto pCounter = static_cast<Text*>(pNode);
-        int counter = std::atoi(pCounter->getString().c_str());
-        counter += amount;
-        pCounter->setString(supportfunctions::to_string(counter));
-        count --;
-    });
-    float fulltime = 0.4f;
-    float time = fulltime / count;
-    auto countSeq = Sequence::create(countAction, DelayTime::create(time), nullptr);
-    auto countRepeat = Repeat::create(countSeq, count);
-    
-    return countRepeat;
-    
-}
-
-FiniteTimeAction* ViewModel::countUp(const int count)
-{
-    return countUpOrDown(count, +1);
-}
-
-FiniteTimeAction* ViewModel::countDown(const int count)
-{
-    return countUpOrDown(count, -1);
-}
 
 void ViewModel::onExit()
 {
