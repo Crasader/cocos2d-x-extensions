@@ -95,6 +95,7 @@ protected:
     virtual void removeFromParent(ViewModel*);
     virtual FiniteTimeAction* countUp(const int count);
     virtual FiniteTimeAction* countDown(const int count);
+    virtual FiniteTimeAction* countUpOrDown(int count, const int amount);
     void bindToggle(Factory<ViewModel>& factory, Node* pNode);
     void bindLink(Factory<ViewModel>& factory, Node* pNode);
 
@@ -117,11 +118,11 @@ protected:
     bool isRectContains(Node* pNode, const Vec2& point);
     View* pushView(const std::string& fname, Factory<ViewModel>& factory, Scene* scene = nullptr);
     void popView();
-    
 private:
     void setParent(ViewModel* pParent);
     void operator =(const ViewModel& src);
     ViewModel(const ViewModel& src);
     bool _moved;
+
 };
 #endif /* defined(__okeya__ViewModel__) */
