@@ -2,8 +2,20 @@
 #define __okeya__SceneManager__
 
 #include <iostream>
+#ifndef __okeya__Factory__
 #include "Factory.h"
+#endif //__okeya__Factory__
+#ifndef __okeya__Factory__
+#include "Factory.h"
+#endif //__okeya__Factory__
+
+#ifndef __okeya__View__
 #include "View.h"
+#endif //__okeya__View__
+#ifndef __okeya__View__
+#include "View.h"
+#endif //__okeya__View__
+
 
 class SceneManager
 {
