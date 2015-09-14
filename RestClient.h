@@ -12,7 +12,13 @@
 #include "network/HttpRequest.h"
 #include "network/HttpClient.h"
 #include <unordered_map>
+#ifndef __zeron__Env_h
 #include "Env.h"
+#endif //__zeron__Env_h
+#ifndef __zeron__Env_h
+#include "Env.h"
+#endif //__zeron__Env_h
+
 
 using namespace cocos2d::network;
 

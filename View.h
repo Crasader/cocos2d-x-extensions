@@ -2,9 +2,27 @@
 #define __okeya__View__
 
 #include "cocos2d.h"
+#ifndef __okeya__ViewModel__
 #include "ViewModel.h"
+#endif //__okeya__ViewModel__
+#ifndef __okeya__ViewModel__
+#include "ViewModel.h"
+#endif //__okeya__ViewModel__
+
+#ifndef __okeya__Factory__
 #include "Factory.h"
+#endif //__okeya__Factory__
+#ifndef __okeya__Factory__
+#include "Factory.h"
+#endif //__okeya__Factory__
+
+#ifndef __okeya__BGMPlayer__
 #include "BGMPlayer.h"
+#endif //__okeya__BGMPlayer__
+#ifndef __okeya__BGMPlayer__
+#include "BGMPlayer.h"
+#endif //__okeya__BGMPlayer__
+
 #include "ProtocolAds.h"
 
 using namespace cocos2d::plugin;

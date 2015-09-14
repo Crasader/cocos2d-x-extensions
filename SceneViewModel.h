@@ -1,7 +1,13 @@
 #ifndef __okeya__titlescene_SceneViewModel__
 #define __okeya__titlescene_SceneViewModel__
 
+#ifndef __okeya__ViewModel__
 #include "ViewModel.h"
+#endif //__okeya__ViewModel__
+#ifndef __okeya__ViewModel__
+#include "ViewModel.h"
+#endif //__okeya__ViewModel__
+
 
 namespace titlescene{
     
