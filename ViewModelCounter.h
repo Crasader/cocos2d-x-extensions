@@ -10,14 +10,6 @@
 #define __okeya__ViewModelCounter__
 
 #include "cocos2d.h"
-#ifndef __okeya__SupportFunctions__
-#include "SupportFunctions.h"
-#endif //__okeya__SupportFunctions__
-#ifndef __okeya__SupportFunctions__
-#include "SupportFunctions.h"
-#endif //__okeya__SupportFunctions__
-
-#include "ui/UIText.h"
 
 using namespace cocos2d;
 using namespace cocos2d::ui;

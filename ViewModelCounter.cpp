@@ -7,6 +7,10 @@
 //
 
 #include "ViewModelCounter.h"
+#include "SupportFunctions.h"
+#include "ui/UIText.h"
+
+using namespace cocos2d::ui;
 
 ViewModelCounter::~ViewModelCounter()
 {

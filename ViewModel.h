@@ -2,44 +2,16 @@
 #define __okeya__ViewModel__
 
 #include "cocos2d.h"
-#ifndef __okeya__Factory__
-#include "Factory.h"
-#endif //__okeya__Factory__
-#ifndef __okeya__Factory__
-#include "Factory.h"
-#endif //__okeya__Factory__
-
+#include "ui/cocosGUI.h"
 #include "editor-support/cocostudio/CocoStudio.h"
-#include "editor-support/cocostudio/CCArmature.h"
-#include "ui/UIText.h"
-#include "ui/UIScrollView.h"
-#ifndef __okeya__SupportFunctions__
-#include "SupportFunctions.h"
-#endif //__okeya__SupportFunctions__
-#ifndef __okeya__SupportFunctions__
-#include "SupportFunctions.h"
-#endif //__okeya__SupportFunctions__
-
-#ifndef __okeya__BGMPlayer__
-#include "BGMPlayer.h"
-#endif //__okeya__BGMPlayer__
-#ifndef __okeya__BGMPlayer__
-#include "BGMPlayer.h"
-#endif //__okeya__BGMPlayer__
-
-#ifndef __okeya__ActionQueue__
-#include "ActionQueue.h"
-#endif //__okeya__ActionQueue__
-#ifndef __okeya__ActionQueue__
-#include "ActionQueue.h"
-#endif //__okeya__ActionQueue__
-
 #include <spine/SkeletonAnimation.h>
-#include <string>
-#include <iostream>
+#include "Factory.h"
 
 using namespace cocos2d;
+using namespace cocos2d::ui;
+using namespace cocos2d::experimental;
 using namespace cocostudio;
+using namespace spine;
 
 class View;
 
