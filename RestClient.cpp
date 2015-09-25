@@ -9,8 +9,7 @@
 #include "RestClient.h"
 #include <future>
 #include "curl/curl.h"
-
-
+#include "Env.h"
 #include <iostream>
 
 const std::string RestClient::URL_PREFIX = API_URL;

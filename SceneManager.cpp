@@ -7,6 +7,9 @@
 //
 
 #include "SceneManager.h"
+#include "editor-support/cocostudio/CocoStudio.h"
+
+using namespace cocos2d;
 
 SceneManager::SceneManager()
 {

@@ -3,6 +3,7 @@
 #include "SceneManager.h"
 #include "SupportFunctions.h"
 #include "editor-support/cocostudio/CocoStudio.h"
+#include "BGMPlayer.h"
 
 using namespace experimental;
 using namespace cocos2d::ui;
