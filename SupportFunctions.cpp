@@ -1,5 +1,6 @@
 #include "SupportFunctions.h"
 #include <sstream>
+#include <iomanip>
 
 namespace supportfunctions {
     int bit(const int num){
@@ -51,5 +52,14 @@ namespace supportfunctions {
         }else{
             return false;
         }
+    }
+
+    const int todayYmd()
+    {
+        auto now = std::chrono::system_clock::now();
+        time_t in_time_t = std::chrono::system_clock::to_time_t(now);
+        std::stringstream ss;
+        ss << std::put_time(std::localtime(&in_time_t), "%Y%m%d");
+        return to_int(ss.str());
     }
 }

@@ -18,6 +18,7 @@ namespace supportfunctions{
 
     std::vector<std::string> splitLines(const std::string& str, const int rows);
     std::string strftime(const int timestamp, const char* format);
+    const int todayYmd();
     bool isOpening(long int now, long int open, long int close);
 }
 
