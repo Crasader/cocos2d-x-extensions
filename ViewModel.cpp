@@ -398,7 +398,11 @@ void ViewModel::set(const std::string& name, const std::string& value){
         if(value == ""){
             pSprite->setVisible(false);
         }else{
-            pSprite->loadTexture(value);
+            if(SpriteFrameCache::getInstance()->getSpriteFrameByName(value)){
+                pSprite->loadTexture(value, ImageView::TextureResType::PLIST);
+            }else{
+                pSprite->loadTexture(value, ImageView::TextureResType::LOCAL);
+            }
             pSprite->setVisible(true);
         }
     }else if(prefix == ViewModel::LabelPrefix){
