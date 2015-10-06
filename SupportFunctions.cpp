@@ -1,6 +1,10 @@
 #include "SupportFunctions.h"
 #include <sstream>
 #include <iomanip>
+#include "cocos2d.h"
+
+using namespace cocos2d;
+using namespace cocos2d::ui;
 
 namespace supportfunctions {
     int bit(const int num){
@@ -61,5 +65,16 @@ namespace supportfunctions {
         std::stringstream ss;
         ss << std::put_time(std::localtime(&in_time_t), "%Y%m%d");
         return to_int(ss.str());
+    }
+    
+    cocos2d::ui::ImageView* createImageView(const std::string& filePath)
+    {
+        ImageView::TextureResType resType;
+        if(SpriteFrameCache::getInstance()->getSpriteFrameByName(filePath)){
+            resType = ImageView::TextureResType::PLIST;
+        }else{
+            resType = ImageView::TextureResType::LOCAL;
+        }
+        return ImageView::create(filePath, resType);
     }
 }

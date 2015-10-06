@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <sstream>
+#include "cocos/ui/UIImageView.h"
 
 namespace supportfunctions{
     int bit(const int num);
@@ -18,6 +19,7 @@ namespace supportfunctions{
 
     std::vector<std::string> splitLines(const std::string& str, const int rows);
     std::string strftime(const int timestamp, const char* format);
+    cocos2d::ui::ImageView* createImageView(const std::string& filePath);
     const int todayYmd();
     bool isOpening(long int now, long int open, long int close);
 }
