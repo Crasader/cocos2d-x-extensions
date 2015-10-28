@@ -218,8 +218,8 @@ void ViewModel::bind(Node* pNode, Factory<ViewModel>& factory)
              prefix == animationPrefix){
         
         if(prefix == ViewModel::LabelPrefix){
-            auto pText = static_cast<Text*>(pNode);
-            if(pText->getType() == Text::Type::TTF){
+            auto pText = dynamic_cast<Text*>(pNode);
+            if(pText && pText->getType() == Text::Type::TTF){
                 pText->enableShadow(Color4B::BLACK, Size(2, -2));
 //                pText->enableOutline(Color4B(68, 34, 0, 255), 1);
             }
