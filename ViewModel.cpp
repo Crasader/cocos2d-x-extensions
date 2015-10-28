@@ -406,8 +406,13 @@ void ViewModel::set(const std::string& name, const std::string& value){
             pSprite->setVisible(true);
         }
     }else if(prefix == ViewModel::LabelPrefix){
-        auto pText = static_cast<Text*>(pNode);
-        pText->setString(value);
+        auto bmFont = dynamic_cast<TextBMFont*>(pNode);
+        if(bmFont){
+            bmFont->setString(value);
+        }else{
+            auto pText = static_cast<Text*>(pNode);
+            pText->setString(value);
+        }
     }else if(prefix == ViewModel::ProgressPrefix){
         static_cast<LoadingBar*>(pNode)->setPercent(std::stoi(value));
     }else{
