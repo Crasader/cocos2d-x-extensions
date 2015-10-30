@@ -8,7 +8,7 @@
 
 #include "ViewModelCounter.h"
 #include "SupportFunctions.h"
-#include "ui/UIText.h"
+#include "ui/cocosGUI.h"
 
 using namespace cocos2d::ui;
 
@@ -22,7 +22,7 @@ FiniteTimeAction* ViewModelCounter::countUpOrDown(int count, const int amount)
         if(count < 1){
             return;
         }
-        auto pCounter = static_cast<Text*>(pNode);
+        auto pCounter = static_cast<TextBMFont*>(pNode);
         int counter = std::atoi(pCounter->getString().c_str());
         counter += amount;
         pCounter->setString(supportfunctions::to_string(counter));

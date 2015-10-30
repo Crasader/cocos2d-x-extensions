@@ -428,7 +428,15 @@ void ViewModel::set(const std::string& name, int value)
 
 int ViewModel::get(const std::string& name)
 {
-    auto str = static_cast<Text*>(getNode(name))->getString();
+    auto node = getNode(name);
+    auto bmText = dynamic_cast<TextBMFont*>(node);
+    std::string str;
+    if(bmText){
+        str = bmText->getString();
+    }else{
+        str = static_cast<Text*>(node)->getString();
+
+    }
     return std::stoi(str);
 }
 
