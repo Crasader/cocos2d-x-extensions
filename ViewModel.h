@@ -109,13 +109,13 @@ protected:
     ValueMap _data;
     virtual bool fixName(Node* pNode);
     bool isRectContains(Node* pNode, const Vec2& point);
-    View* pushView(const std::string& fname, Factory<ViewModel>& factory, Scene* scene = nullptr);
+    View* pushView(const std::string& fname, Factory<ViewModel>& factory, Scene* scene = nullptr, Node* hideNode = nullptr);
     void popView();
+    static std::stack<Node*> invisibleNodes;
 private:
     void setParent(ViewModel* pParent);
     void operator =(const ViewModel& src);
     ViewModel(const ViewModel& src);
     bool _moved;
-
 };
 #endif /* defined(__okeya__ViewModel__) */
