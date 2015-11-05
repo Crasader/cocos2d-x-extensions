@@ -546,6 +546,7 @@ void ViewModel::setTable(const std::string& areaName, const std::string& classNa
     auto margin = Widget::create();
     margin->setContentSize(Size(pLayer->getContentSize().width, pTmpl->getContentSize().height));
     pLayer->addChild(margin);
+    pLayer->setScrollBarEnabled(false);
     jumpToTop(pLayer);
     pTmpl->release();
     pLayer->refreshView();

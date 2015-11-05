@@ -65,7 +65,7 @@ public:
     virtual void toggle(const std::string& name);
     virtual void toggle(Node* pNode);
     virtual void setList(Factory<ViewModel>& factory, ValueVector* pVec, const ListConfig& config);
-    virtual void setList(const std::string& listTemplateName, Factory<ViewModel>&factory, ValueVector& array, bool hasBlank = true, bool hasScrollBar = true);
+    virtual void setList(const std::string& listTemplateName, Factory<ViewModel>&factory, ValueVector& array, bool hasBlank = true, bool hasScrollBar = false);
     virtual void setList(const std::string& areaName, const std::string& className, const std::string& listTemplateName, Factory<ViewModel>&factory, ValueVector& array, bool hasBlank = true, bool hasScrollBar = true);
     virtual void setTable(const std::string& listTemplateName, Factory<ViewModel>&factory, ValueVector& array);
     virtual void setTable(const std::string& areaName, const std::string& className, const std::string& listTemplateName, Factory<ViewModel>&factory, ValueVector& array);
