@@ -17,6 +17,8 @@ const std::vector<std::string> ViewModel::ObservePrefixes = {"Character"};
 
 const int ViewModel::DefaultSize = 1000;
 
+std::stack<Node*> ViewModel::invisibleNodes;
+
 ViewModel::ViewModel()
 : _pParent(nullptr)
 , _moved(false)
@@ -736,11 +738,15 @@ void ViewModel::refresh(const int status)
 {
 }
 
-View* ViewModel::pushView(const std::string& name, Factory<ViewModel>& factory, Scene* scene)
+View* ViewModel::pushView(const std::string& name, Factory<ViewModel>& factory, Scene* scene, Node* hideNode)
 {
     auto ignoreNodeName = "PlayerStatus";
     if(!scene){
         scene = Director::getInstance()->getRunningScene();
+    }
+    if(hideNode){
+        hideNode->setVisible(false);
+        ViewModel::invisibleNodes.push(hideNode);
     }
     std::vector<Node*> nodes;
     auto& children = scene->getChildren();
@@ -798,6 +804,12 @@ void ViewModel::popView()
             nodes.push_back(c);
         }
     }
+    if(!ViewModel::invisibleNodes.empty()){
+        auto node = ViewModel::invisibleNodes.top();
+        node->setVisible(true);
+        ViewModel::invisibleNodes.pop();
+    }
+    
     static_cast<View*>(node)->getRootViewModel()->refresh(ViewModel::Status::POPVIEW, name);
 }
 
