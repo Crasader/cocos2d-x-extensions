@@ -18,7 +18,15 @@ using namespace cocos2d::ui;
 class TwitterShare
 {
 public:
-    void appendButton(Scene* scene);
+    void appendButton(Scene* scene, const std::string& tweetText);
+    inline void setBeforeScrenShot(std::function<void(void)> fn){ _beforeScreenShot = fn; }
+    inline void setBeforeTweet(std::function<void(void)> fn){ _beforeTweet = fn; }
+    inline void setAfterTweet(std::function<void(void)> fn){ _afterTweet = fn; }
+private:
+    void appendTweetLayer(const std::string& tweetText, const std::string& imagePath);
+    std::function<void(void)> _beforeScreenShot;
+    std::function<void(void)> _beforeTweet;
+    std::function<void(void)> _afterTweet;
 };
 
 #endif /* defined(__okeya__TwitterShare__) */
