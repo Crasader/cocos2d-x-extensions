@@ -746,8 +746,8 @@ View* ViewModel::pushView(const std::string& name, Factory<ViewModel>& factory, 
     }
     if(hideNode){
         hideNode->setVisible(false);
-        ViewModel::invisibleNodes.push(hideNode);
     }
+    ViewModel::invisibleNodes.push(hideNode);
     std::vector<Node*> nodes;
     auto& children = scene->getChildren();
     nodes.push_back(children.back());
@@ -806,7 +806,9 @@ void ViewModel::popView()
     }
     if(!ViewModel::invisibleNodes.empty()){
         auto node = ViewModel::invisibleNodes.top();
-        node->setVisible(true);
+        if(node != nullptr){
+            node->setVisible(true);
+        }
         ViewModel::invisibleNodes.pop();
     }
     
