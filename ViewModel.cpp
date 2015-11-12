@@ -519,7 +519,7 @@ void ViewModel::setTable(const std::string& listTemplateName, Factory<ViewModel>
 {
     setTable("ScrollArea", "c_SummaryViewModel", listTemplateName, factory, array);
 }
-void ViewModel::setTable(const std::string& areaName, const std::string& className, const std::string& listTemplateName, Factory<ViewModel>&factory, ValueVector& array)
+void ViewModel::setTable(const std::string& areaName, const std::string& className, const std::string& listTemplateName, Factory<ViewModel>&factory, ValueVector& array, bool hasMargin, bool hasScrollBar)
 {
     auto pLayer = static_cast<cocos2d::ui::ListView*>(getNode(areaName));
     pLayer->removeAllChildren();
@@ -545,10 +545,12 @@ void ViewModel::setTable(const std::string& areaName, const std::string& classNa
     if(row->getChildren().size() > 0){
         pLayer->addChild(row);
     }
-    auto margin = Widget::create();
-    margin->setContentSize(Size(pLayer->getContentSize().width, pTmpl->getContentSize().height));
-    pLayer->addChild(margin);
-    pLayer->setScrollBarEnabled(false);
+    if(hasMargin){
+        auto margin = Widget::create();
+        margin->setContentSize(Size(pLayer->getContentSize().width, pTmpl->getContentSize().height));
+        pLayer->addChild(margin);
+    }
+    pLayer->setScrollBarEnabled(hasScrollBar);
     jumpToTop(pLayer);
     pTmpl->release();
     pLayer->refreshView();

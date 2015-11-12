@@ -68,7 +68,7 @@ public:
     virtual void setList(const std::string& listTemplateName, Factory<ViewModel>&factory, ValueVector& array, bool hasBlank = true, bool hasScrollBar = false);
     virtual void setList(const std::string& areaName, const std::string& className, const std::string& listTemplateName, Factory<ViewModel>&factory, ValueVector& array, bool hasBlank = true, bool hasScrollBar = true);
     virtual void setTable(const std::string& listTemplateName, Factory<ViewModel>&factory, ValueVector& array);
-    virtual void setTable(const std::string& areaName, const std::string& className, const std::string& listTemplateName, Factory<ViewModel>&factory, ValueVector& array);
+    virtual void setTable(const std::string& areaName, const std::string& className, const std::string& listTemplateName, Factory<ViewModel>&factory, ValueVector& array, bool hasMargin = true, bool hasScrollBar = false);
     void jumpToTop(cocos2d::ui::ScrollView* pList);
     void disableTouch();
     void disableTouch(const std::string& name);
