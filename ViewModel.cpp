@@ -487,12 +487,12 @@ void ViewModel::setList(Factory<ViewModel>& factory, ValueVector* pVec, const Li
     }
 }
 
-void ViewModel::setList(const std::string& listTemplateName, Factory<ViewModel>&factory, ValueVector& array, bool hasBlank, bool hasScrollBar)
+void ViewModel::setList(const std::string& listTemplateName, Factory<ViewModel>&factory, const ValueVector& array, bool hasBlank, bool hasScrollBar)
 {
     setList("ScrollArea", "c_SummaryViewModel", listTemplateName, factory, array, hasBlank, hasScrollBar);
 }
 
-void ViewModel::setList(const std::string& areaName, const std::string& className, const std::string& listTemplateName, Factory<ViewModel>&factory, ValueVector& array, bool hasBlank, bool hasScrollBar)
+void ViewModel::setList(const std::string& areaName, const std::string& className, const std::string& listTemplateName, Factory<ViewModel>&factory, const ValueVector& array, bool hasBlank, bool hasScrollBar)
 {
     auto pLayer = static_cast<cocos2d::ui::ListView*>(getNode(areaName));
     pLayer->removeAllChildren();
@@ -515,11 +515,11 @@ void ViewModel::setList(const std::string& areaName, const std::string& classNam
     pLayer->refreshView();
 }
 
-void ViewModel::setTable(const std::string& listTemplateName, Factory<ViewModel>&factory, ValueVector& array)
+void ViewModel::setTable(const std::string& listTemplateName, Factory<ViewModel>&factory, const ValueVector& array)
 {
     setTable("ScrollArea", "c_SummaryViewModel", listTemplateName, factory, array);
 }
-void ViewModel::setTable(const std::string& areaName, const std::string& className, const std::string& listTemplateName, Factory<ViewModel>&factory, ValueVector& array, bool hasMargin, bool hasScrollBar)
+void ViewModel::setTable(const std::string& areaName, const std::string& className, const std::string& listTemplateName, Factory<ViewModel>&factory, const ValueVector& array, bool hasMargin, bool hasScrollBar)
 {
     auto pLayer = static_cast<cocos2d::ui::ListView*>(getNode(areaName));
     pLayer->removeAllChildren();
@@ -626,7 +626,7 @@ ViewModel* ViewModel::getChildByName(const std::string& name)
     return nullptr;
 }
 
-void ViewModel::update(Value& value)
+void ViewModel::update(const Value& value)
 {
 }
 

@@ -48,7 +48,7 @@ public:
     const cocos2d::Rect getBoundingBox() const;
     void appendNode(Node* pNode);
     virtual void bind(Node* children, Factory<ViewModel>& factory);
-    virtual void update(Value& value);
+    virtual void update(const Value& value);
     virtual void refresh(const int status);
     virtual void refresh(const int status, const std::string& callee);
     virtual void set(const std::string& name, const std::string& value);
@@ -65,10 +65,10 @@ public:
     virtual void toggle(const std::string& name);
     virtual void toggle(Node* pNode);
     virtual void setList(Factory<ViewModel>& factory, ValueVector* pVec, const ListConfig& config);
-    virtual void setList(const std::string& listTemplateName, Factory<ViewModel>&factory, ValueVector& array, bool hasBlank = true, bool hasScrollBar = false);
-    virtual void setList(const std::string& areaName, const std::string& className, const std::string& listTemplateName, Factory<ViewModel>&factory, ValueVector& array, bool hasBlank = true, bool hasScrollBar = true);
-    virtual void setTable(const std::string& listTemplateName, Factory<ViewModel>&factory, ValueVector& array);
-    virtual void setTable(const std::string& areaName, const std::string& className, const std::string& listTemplateName, Factory<ViewModel>&factory, ValueVector& array, bool hasMargin = true, bool hasScrollBar = false);
+    virtual void setList(const std::string& listTemplateName, Factory<ViewModel>&factory, const ValueVector& array, bool hasBlank = true, bool hasScrollBar = false);
+    virtual void setList(const std::string& areaName, const std::string& className, const std::string& listTemplateName, Factory<ViewModel>&factory, const ValueVector& array, bool hasBlank = true, bool hasScrollBar = true);
+    virtual void setTable(const std::string& listTemplateName, Factory<ViewModel>&factory, const ValueVector& array);
+    virtual void setTable(const std::string& areaName, const std::string& className, const std::string& listTemplateName, Factory<ViewModel>&factory, const ValueVector& array, bool hasMargin = true, bool hasScrollBar = false);
     void jumpToTop(cocos2d::ui::ScrollView* pList);
     void disableTouch();
     void disableTouch(const std::string& name);
